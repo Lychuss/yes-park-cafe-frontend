@@ -14,7 +14,7 @@ export default function Roast(){
                     <br></br>ROAST</h1>
             </div>
             <div>
-                <img src="/images/right-f-image.jfif" alt="left-f-image" className="w-100 h-60 mb-40 mb-20 mt-20"></img>
+                <img src="/images/right-f-image.jfif" alt="left-f-image" className="w-100 h-60 mb-40 mt-20"></img>
                 <img src="/images/right-s-image.jfif" alt="left-f-image" className="w-100 h-60 "></img>
             </div>
         </section>

@@ -84,7 +84,7 @@ export default function Home(){
         <section className="mt-20 ml-16">
             <h1 className="text-[#3a2f2a] font-bold text-7xl">OUR COFFEE</h1>
             <div className="ml-3 mt-5 flex"> 
-                <p className="text-[#8c8a8bcc] text-xl font-serif">There's always room for coffee, its not just coffee,
+                <p className="text-[#8c8a8bcc] text-[20px] font-serif">There's always room for coffee, its not just coffee,
                     <br></br>it's an experience, life is better with coffee
                 </p>
                 <div className="bg-yellow-950 ml-150 border rounded-full w-15 h-15r justify-items-center
@@ -138,6 +138,24 @@ export default function Home(){
                 waiting for you. And it tastes great!
             </p>
             <Roast />
+        </section>
+        <section className="ml-16">
+            <div className="flex absolute top-650">
+                <h1 className="text-[#3a2f2a] font-bold text-7xl">CUSTOMER<br></br>REVIEWS</h1>
+                <p className="text-[#8c8a8bcc] ml-100 mb-0 text-[20px] font-serif">There's always room for coffee, its not just coffee,
+                    <br></br>it's an experience, life is better with coffee
+                </p>
+            </div>
+            <div className="ml-3 mt-5 flex ml-270"> 
+                <div className="bg-yellow-950 border rounded-full w-15 h-15 justify-items-center
+                    content-center" onClick={next}>
+                    <img src="images/right-arrow.png" onClick={next} alt="right-arrow" className="w-6 h-8 rotate-180"></img>
+                </div>
+                <div className="bg-yellow-950 ml-5 border rounded-full w-15 h-15 justify-items-center
+                    content-center" onClick={prev}>
+                    <img src="images/right-arrow.png" onClick={prev} alt="right-arrow" className="w-6 h-8"></img>
+                </div>
+            </div>
         </section>
     </>
 }
