@@ -10,7 +10,7 @@ export default function Roast(){
                 <h1 className="mb-40">LIGHT ROAST</h1>
                 <h1 className="mb-40">MEDIUM ROAST</h1>
                 <h1 className="mb-40">DARK ROAST</h1>
-                <h1 className="mb-40">MEDIUM-DARK 
+                <h1>MEDIUM-DARK 
                     <br></br>ROAST</h1>
             </div>
             <div>

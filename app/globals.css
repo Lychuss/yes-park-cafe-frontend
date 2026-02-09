@@ -19,8 +19,17 @@
   }
 }
 
-body {
-  background: var(--background);
+body, html {
+  background: #dbdac6cc;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+
+  overflow-y: auto; /* allow scrolling only if needed */
+  scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  width: 0;  /* hide scrollbar in Chrome, Safari, Edge */
+  background: transparent;
 }
