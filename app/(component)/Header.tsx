@@ -8,7 +8,7 @@ export default function Header(){
             <h1 className="text-black font-serif font-bold my-10">Coffee</h1>
             <h1 className="text-black font-serif font-bold my-10">Equipment</h1>
             <h1 className="text-black font-serif font-bold my-10">Store</h1>
-            <Button onClick={() => console.log("hello")} className="ml-67 bg-yellow-950 font-serif
+            <Button onClick={() => console.log("hello")} className="ml-70 bg-yellow-950 font-serif
              px-6 py-2 m-10" label="Order Now"/>
         </div>
     </>

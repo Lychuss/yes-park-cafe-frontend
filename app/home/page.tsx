@@ -8,6 +8,7 @@ import Roast from "../(component)/Roast";
 import Ads from "../(component)/Ads";
 import Footer from "../(component)/Footer";
 import Copyright from "../(component)/Copyright";
+import Carousel from "../(component)/Carousel";
 
 type Products = {
     name: string;
@@ -34,58 +35,7 @@ const products: Products[] = [
 
 
 export default function Home(){
-    const [index, setIndex] = useState(0);
-    const [leftIndex, setLeftIndex] = useState(0);
-    const [rightIndex, setRightIndex] = useState(1);
 
-    const handleNextSlide = () => {
-        setLeftIndex((prevLeft) => {
-        const newLeft =
-            rightIndex === images.length - 1 ? 0 : rightIndex;
-
-        const nextRight =
-            newLeft === images.length - 1 ? 0 : newLeft + 1;
-
-        setRightIndex(nextRight);
-
-        return newLeft;
-        });
-    };
-
-    const handlePrevSlide = () => {
-        setRightIndex((prevRight) => {
-        const newRight =
-            leftIndex === 0 ? images.length - 1 : leftIndex - 1;
-
-        const nextLeft =
-            newRight === 0 ? images.length - 1 : newRight - 1;
-
-        setLeftIndex(nextLeft);
-
-        return newRight;
-        });
-    };
-
-
-
-    const getItem = (offset: number) => {
-        const i = (index + offset + products.length) % products.length;
-        return products[i];
-    };
-
-
-    const visible = [
-        getItem(-1), // small left
-        getItem(0),  // big center left
-        getItem(1),  // big center right
-        getItem(2),  // small right
-    ];
-
-    const next = () => setIndex((prev) => (prev + 1) % products.length);
-
-    
-    const prev = () =>
-        setIndex((prev) => (prev - 1 + products.length) % products.length);
 
     return <>
         <section className="relative w-full h-[350px] bg-[#dbdac6cc] flex flex-col items-center justify-center px-12">
@@ -120,46 +70,7 @@ export default function Home(){
             </div>
         </section>
         <Galao />
-        <section className="mt-20 ml-16">
-            <h1 className="text-[#3a2f2a] font-bold text-7xl">OUR COFFEE</h1>
-            <div className="ml-3 mt-5 flex"> 
-                <p className="text-[#8c8a8bcc] text-[20px] font-serif">There's always room for coffee, its not just coffee,
-                    <br></br>it's an experience, life is better with coffee
-                </p>
-                <div className="bg-yellow-950 ml-150 border rounded-full w-15 h-15r justify-items-center
-                    content-center" onClick={next}>
-                    <img src="images/right-arrow.png" onClick={next} alt="right-arrow" className="w-6 h-8 rotate-180"></img>
-                </div>
-                <div className="bg-yellow-950 ml-5 border rounded-full w-15 h-15 justify-items-center
-                    content-center" onClick={prev}>
-                    <img src="images/right-arrow.png" onClick={prev} alt="right-arrow" className="w-6 h-8"></img>
-                </div>
-            </div>
-        </section>
-        <section className="w-full flex flex-col items-center gap-6 mt-30">
-            <div className="w-full flex flex-col items-center gap-6">
-                <div className="flex items-center justify-center gap-4 h-[320px]">
-                    {visible.map((item, i) => {
-                    const isCenter = i === 1 || i === 2; 
-                    const sizeClass = isCenter ? "w-78 h-90" : "w-68 h-80";
-
-                    return (
-                        <div
-                        key={item.name}
-                        className={`transition-all duration-1000 ease-in-out transform bg-yellow-950 ${sizeClass} flex flex-col items-center justify-center cursor-pointer`}
-                        >
-                        <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-50 h-50 object-cover rounded-2xl shadow-xl absolute z-100 top-6/4"
-                        />
-                        <h1 className="text-white mt-2 mr-40 mb-10 text-3xl font-semibold text-black">{item.name}</h1>
-                        </div>
-                    );
-                    })}
-                    </div>
-                </div>
-        </section>
+        <Carousel />
         <section className="mt-20 flex flex-col items-center">
             <h1 className="text-[#3a2f2a] font-bold text-7xl text-center">
                 OUR ROASTING
