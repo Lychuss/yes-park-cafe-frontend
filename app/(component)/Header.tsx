@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+
 import Button from "./Button";
 import { useRouter } from "next/navigation";
 
@@ -8,8 +8,8 @@ const h1_style: string = "text-black font-serif font-bold my-10 cursor-pointer";
 export default function Header(){
     const router = useRouter();
 
-    const isClick = (type: string) => {
-        switch(type){
+    const isClick = (name: string) => {
+        switch(name){
             case "home":
                 router.push("/home");
                 break;

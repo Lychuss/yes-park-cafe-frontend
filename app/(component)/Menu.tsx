@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation.js";
+import { useRouter } from "next/navigation";
 import Products from "./Products";
 
 const square_style: string = `w-20 h-23 rounded-sm 
@@ -10,13 +10,15 @@ const h1_style: string = "mb-4 text-sm mt-2";
 const pic_style: string = "w-10 h-10 mt-3 object-contain";
 
 export default function Menu(){
-    const [product, setProduct] = useState("all");
-    
+    const [product, setProduct] = useState("all-products");
     const router = useRouter();
-    const isClick = (product: string) => {
-        setProduct(product);
-        router.push(`coffee/${product}`);
+
+    const isClick = (category: string) => {
+        setProduct(category);
+        console.log(category)
+        router.push(`/coffee/${category}`);
     }
+    
     return <>
         <div className="flex gap-10 justify-center relative">
             <div className={square_style} onClick={() => isClick("all-products")}>
