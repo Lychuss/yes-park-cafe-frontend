@@ -1,23 +1,26 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Button from "./Button";
 
 type MyComponents = {
     coffeeId: string;
 }
 
-const outer_card: string = "w-90 h-140 text-black border border-[rgba(153,153,153,0.79)] rounded-xl flex flex-col p-4";
+const outer_card: string = "w-90 h-135 text-black border border-[rgba(153,153,153,0.79)] rounded-xl flex flex-col p-4";
 const middle_card: string = "w-80 h-80 bg-[rgba(86,132,75,0.8)] rounded-xl relative overflow-hidden self-center";
 const inner_circle: string = `w-110 h-110 bg-[rgba(125,171,114,0.8)] rounded-full flex items-center justify-center
 absolute top-3/6 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-40`;
 const image_style: string = "mb-90";
-const title_style: string = "text-xl text-black font-bold";
-const price_style: string = "text-3xl text-[rgba(125,171,114,0.8)] font-bold";
-const circle_style: string = "transition-colors duration-500 ease-in-out hover:bg-[rgba(125,171,114,0.8)] rounded-full w-15 h-15";
-
+const title_style: string = "text-xl text-black font-bold absolute";
+const price_style: string = "text-3xl text-[rgba(125,171,114,0.8)] font-bold absolute translate-x-53";
+const circle_style: string = "transition-colors duration-500 ease-in-out hover:bg-[rgba(125,171,114,0.8)] rounded-full w-15 h-15 flex justify-center items-center cursor-pointer";
+const oz_style: string = "text-[10px] text-[rgba(153,153,153,0.79)] font-bold"
 
 export default function Products(props: MyComponents){
     const [products, setProducts] = useState<any[]>([]);
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    const [quantity, setQuantity] = useState<number>(0);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -41,8 +44,23 @@ export default function Products(props: MyComponents){
         fetchData();
     }, [props.coffeeId]);
 
+    const sizeClick = () => {
+        return <div className="mt-45 ml-7 flex">
+                        <div className="transition-colors duration-500 ease-in-out bg-[rgba(86,132,75,0.8)] 
+                        rounded-full w-9 h-9 flex justify-center items-center text-3xl text-white mt-2 cursor-pointer"
+                        onClick={() => setQuantity(prev => prev > 0 ? prev - 1 : 0)}>
+                            <p>-</p>
+                        </div>
+                        <h1 className="text-2xl self-center mx-3">{quantity}</h1>
+                        <div className="transition-colors duration-500 ease-in-out bg-[rgba(86,132,75,0.8)] 
+                        rounded-full w-9 h-9 flex justify-center items-center text-2xl text-white mt-2 cursor-pointer"
+                        onClick={() => setQuantity(prev => prev + 1)}>
+                            <p>+</p>
+                        </div>
+                        <Button onClick={() => console.log("add")} className="bg-[rgba(86,132,75,0.8)] font-sans ml-5 w-38 p-3 h-13 rounded-4xl font-bold text-white" label="Add to Order"/>
+                    </div>
+    }
 
-     
     return <>
         <div className="p-20 flex flex-wrap gap-10 justify-center">
             {products.map((product, index) => {
@@ -56,19 +74,56 @@ export default function Products(props: MyComponents){
                     <div className="flex justify-between gap-32 p-3 relative">
                         <h1 className={title_style}>{product.name}</h1>
                         <h1 className={price_style}>₱{product.price}</h1>
-                        <div className="absolute bottom-0 left-0 w-full p-3 flex top-20 justify-center gap-5">
-                            <div className={circle_style}></div>
-                            <div className={circle_style}></div>
-                            <div className={circle_style}></div>
-                            <div className={circle_style}></div>
-                            <div className="absolute bottom-0 left-0 w-full p-3 flex top-17 justify-center gap-10">
-                                <h1>Tall</h1>
-                                <h1>Grande</h1>
-                                <h1>Venti</h1>
-                                <h1>Trenta</h1>
+                        <div className="absolute top-20 left-0 w-full flex justify-center gap-4">
+                        <div className="flex flex-col items-center gap-2">
+                            <div className={circle_style} onClick={() => {
+                                setQuantity(0);
+                                setActiveIndex(activeIndex === index ? null : index)
+                            }                  
+                            }>
+                                <img src="/images/grande-icon.png" alt="tall" className="w-5 h-5"></img>
                             </div>
-                        </div> 
+                            <h1 className="text-sm">Tall</h1>
+                            <p className={oz_style}>12 oz</p>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-2">
+                            <div className={circle_style} onClick={() => {
+                                setQuantity(0);
+                                setActiveIndex(activeIndex === index ? null : index)
+                            }
+                            }>
+                                <img src="/images/grande-icon.png" alt="grande" className="w-6 h-6"></img>
+                            </div>
+                            <h1 className="text-sm">Grande</h1>
+                            <p className={oz_style}>16 oz</p>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-2">
+                            <div className={circle_style} onClick={() => {
+                                setQuantity(0);
+                                setActiveIndex(activeIndex === index ? null : index)
+                                }
+                            }>
+                                <img src="/images/grande-icon.png" alt="venti" className="w-7 h-7"></img>
+                            </div>
+                            <h1 className="text-sm">Venti</h1>
+                            <p className={oz_style}>24 oz</p>
+                        </div>
+                        <div className="flex flex-col items-center gap-2" >
+                            <div className={circle_style} onClick={() => {
+                                setQuantity(0);
+                                setActiveIndex(activeIndex === index ? null : index)
+                            }
+                            }>
+                                <img src="/images/grande-icon.png" alt="trenta" className="w-8 h-8"></img>
+                            </div>
+                            <h1 className="text-sm">Trenta</h1>
+                            <p className={oz_style}>32 oz</p>
+                        </div>
                     </div>
+                    </div>
+                    {activeIndex === index && sizeClick()}          
                 </div>
                 </>
             })}
