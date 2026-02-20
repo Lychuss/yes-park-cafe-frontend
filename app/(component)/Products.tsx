@@ -28,10 +28,9 @@ export default function Products(props: MyComponents){
         const fetchData = async () => {
             
             const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/coffee/product/${props.coffeeId}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
+                method: "POST",
+                body: JSON.stringify({userId: localStorage.getItem('userId')}),
+                credentials: "include"
             })
 
             const data = await response.json();

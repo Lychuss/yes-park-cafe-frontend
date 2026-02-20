@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Search from "../(component)/Search";
 import Galao from "../(component)/Galao";
 import Roast from "../(component)/Roast";
@@ -35,7 +34,26 @@ const products: Products[] = [
 
 
 export default function Home(){
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/guest`, {
+                method: "POST",
+                credentials: "include"
+            });
 
+            const data = await response.json();
+
+            if(!data.success){
+                localStorage.setItem('userId', data.userId);
+                console.log("new token!");
+            }
+
+            console.log(data.success);
+        }
+
+        fetchData();
+    }, []);
 
     return <>
         <section className="relative w-full h-[350px] bg-[#dbdac6cc] flex flex-col items-center justify-center px-12">
