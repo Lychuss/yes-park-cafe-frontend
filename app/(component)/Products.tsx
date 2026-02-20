@@ -21,6 +21,8 @@ export default function Products(props: MyComponents){
     const [products, setProducts] = useState<any[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+    const [totalCart, setTotalCart] = useState<number>(0);
+    const [cartShow, setCartShow] = useState<boolean>(false);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -68,7 +70,11 @@ export default function Products(props: MyComponents){
                                 }))}>
                             <p>+</p>
                         </div>
-                        <Button onClick={() => console.log("add")} className="bg-[rgba(86,132,75,0.8)] font-sans ml-5 w-38 p-3 h-13 rounded-4xl font-bold text-white" label="Add to Order"/>
+                        <Button onClick={() => {
+                            setTotalCart(prev => prev + quantities[index]);
+                            setCartShow(true);
+                        }} className="bg-[rgba(86,132,75,0.8)] font-sans ml-5 w-38 p-3 h-13 rounded-4xl font-bold text-white
+                            cursor-pointer" label="Add to Order"/>
                     </div>
     }
 
@@ -156,5 +162,9 @@ export default function Products(props: MyComponents){
                 </>
             })}
         </div>
+        {cartShow &&
+        <div className="absolute rounded-full bg-[rgba(86,132,75,0.8)] top-9 right-145 flex items-center w-4 h-4 justify-center text-center text-[9px] font-bold">
+            <h1>{totalCart}</h1>
+        </div>}
     </>
 }
