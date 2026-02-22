@@ -23,19 +23,21 @@ export default function Products(props: MyComponents){
     const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
     const [totalCart, setTotalCart] = useState<number>(0);
     const [cartShow, setCartShow] = useState<boolean>(false);
+    const [size, setSize] = useState<number | null>(null);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         console.log(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/coffee/product/${props.coffeeId}`);
+        
         const fetchData = async () => {
-            
             const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/coffee/product/${props.coffeeId}`, {
                 method: "POST",
-                body: JSON.stringify({userId: localStorage.getItem('userId')}),
                 credentials: "include"
             })
 
             const data = await response.json();
+
+            if(!data.success) return alert('ERROR IN THE FIRST USEEFFECT OF PRODUCTS');
 
             setProducts(data.data);
 
@@ -47,8 +49,32 @@ export default function Products(props: MyComponents){
         console.log("coffeeId changed:", props.coffeeId);
     }, [props.coffeeId]);
 
-    const sizeClick = (index: number, size: number) => {
-        return <div className={`mt-${size} ml-7 flex`}>
+
+    const add_cart = async (orderProduct: string, orderSize: number | null, orderQuantity: number) => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/product/add-cart`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    product_name: orderProduct,
+                    size: orderSize,
+                    quantity: orderQuantity
+                }),
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+
+            if(!data.success) return alert('ERROR IN THE SECOND USEEFFECT IN PRODUCTS');
+
+            setTotalCart(data.data);
+        }
+
+    const sizeClick = (index: number, height: number, name: string, orderCategory: string) => {
+        return <div className={`mt-${height} ml-7 flex`}>
                         <div className="transition-colors duration-500 ease-in-out bg-[rgba(86,132,75,0.8)] 
                         rounded-full w-9 h-9 flex justify-center items-center text-3xl text-white mt-2 cursor-pointer"
                         onClick={() => 
@@ -70,10 +96,12 @@ export default function Products(props: MyComponents){
                                 }))}>
                             <p>+</p>
                         </div>
-                        <Button onClick={() => {
-                            setTotalCart(prev => prev + quantities[index]);
-                            setCartShow(true);
-                        }} className="bg-[rgba(86,132,75,0.8)] font-sans ml-5 w-38 p-3 h-13 rounded-4xl font-bold text-white
+                        <Button onClick={() => { 
+                            const quantity = quantities[index] | 0;
+                            const product_size = orderCategory === 'coffees' ? size : null;
+                            add_cart(name, product_size, quantity);
+                            setCartShow(true); 
+                            }} className="bg-[rgba(86,132,75,0.8)] font-sans ml-5 w-38 p-3 h-13 rounded-4xl font-bold text-white
                             cursor-pointer" label="Add to Order"/>
                     </div>
     }
@@ -102,6 +130,7 @@ export default function Products(props: MyComponents){
                                                 ...prev,
                                                 [index]: 0
                                             }));
+                                        setSize(12);
                                     }}>
                                         <img src="/images/grande-icon.png" alt="tall" className="w-5 h-5" />
                                     </div>
@@ -116,7 +145,8 @@ export default function Products(props: MyComponents){
                                             setQuantities(prev => ({
                                                 ...prev,
                                                 [index]: 0
-                                            }));                                       
+                                            }));                        
+                                        setSize(16);               
                                     }}>
                                         <img src="/images/grande-icon.png" alt="grande" className="w-6 h-6" />
                                     </div>
@@ -131,6 +161,7 @@ export default function Products(props: MyComponents){
                                                 ...prev,
                                                 [index]: 0
                                             }));
+                                        setSize(24);
                                         setActiveIndex(activeIndex === index ? null : index)
                                     }}>
                                         <img src="/images/grande-icon.png" alt="venti" className="w-7 h-7" />
@@ -146,6 +177,7 @@ export default function Products(props: MyComponents){
                                                 ...prev,
                                                 [index]: 0
                                             }));
+                                        setSize(32);
                                         setActiveIndex(activeIndex === index ? null : index)
                                     }}>
                                         <img src="/images/grande-icon.png" alt="trenta" className="w-8 h-8" />
@@ -156,8 +188,8 @@ export default function Products(props: MyComponents){
                             </div>
                         )}
                     </div>
-                    {product.category === "coffees" && activeIndex === index && sizeClick(index, 0)}
-                    {product.category !== "coffees" && sizeClick(index, 15)}    
+                    {product.category === "coffees" && activeIndex === index && sizeClick(index, 0, product.name, product.category)}
+                    {product.category !== "coffees" && sizeClick(index, 15, product.name, product.category)}    
                 </div>
                 </>
             })}
