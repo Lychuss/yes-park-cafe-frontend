@@ -26,7 +26,6 @@ export default function Products(props: MyComponents){
     const [size, setSize] = useState<number | null>(null);
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
         console.log(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/coffee/product/${props.coffeeId}`);
         
         const fetchData = async () => {
