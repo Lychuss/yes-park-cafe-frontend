@@ -50,7 +50,7 @@ export default function Products(props: MyComponents){
 
 
     const add_cart = async (orderProduct: string, orderSize: number | null, orderQuantity: number) => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/product/add-cart`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/add-cart`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
