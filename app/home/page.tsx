@@ -38,7 +38,7 @@ export default function Home(){
     
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/guest`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/guest`, {
                 method: "POST",
                 credentials: "include"
             });

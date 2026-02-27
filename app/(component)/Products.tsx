@@ -26,10 +26,10 @@ export default function Products(props: MyComponents){
     const [size, setSize] = useState<number | null>(null);
 
     useEffect(() => {
-        console.log(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/coffee/product/${props.coffeeId}`);
+        console.log(`${process.env.NEXT_PUBLIC_API_URL}/coffee/product/${props.coffeeId}`);
         
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/coffee/product/${props.coffeeId}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coffee/product/${props.coffeeId}`, {
                 method: "POST",
                 credentials: "include"
             })

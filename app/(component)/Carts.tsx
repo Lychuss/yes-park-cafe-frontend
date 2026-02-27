@@ -14,7 +14,7 @@ export default function Carts(){
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URL}/prorduct/all-user-cart`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/prorduct/all-user-cart`, {
                 method: 'GET',
                 credentials: 'include'
             });
