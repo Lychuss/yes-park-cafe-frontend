@@ -39,7 +39,7 @@ export default function Home(){
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/guest`, {
-                method: "POST",
+                method: "GET",
                 credentials: "include"
             });
 
