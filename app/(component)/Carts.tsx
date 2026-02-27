@@ -30,25 +30,25 @@ export default function Carts(){
         fetchData();
     }, [])
 
-    return <>
-            <div className="p-20 flex flex-wrap gap-10 justify-center">
-                {products.map((product, index) => {
-                    console.log(product.category)
-                    console.log(product.image);
-                    return <>
-                    <div className={outer_card} key={index}>
-                        <div className={middle_card}>
-                            <div className={inner_circle}>
-                                <img src={product.image}alt={product} className={image_style} ></img>
+    return <div className="flex flex-col w-full max-w-[950px]">
+        <div className="flex flex-wrap gap-15 justify-center">
+                    {products.map((product, index) => {
+                        console.log(product.category)
+                        console.log(product.image);
+                        return <>
+                        <div className={outer_card} key={index}>
+                            <div className={middle_card}>
+                                <div className={inner_circle}>
+                                    <img src={product.image}alt={product} className={image_style} ></img>
+                                </div>
                             </div>
+                            <div className="flex justify-between gap-32 p-3 relative">
+                                <h1 className={title_style}>{product.name}</h1>
+                                <h1 className={price_style}>₱{product.price}</h1>
+                            </div>  
                         </div>
-                        <div className="flex justify-between gap-32 p-3 relative">
-                            <h1 className={title_style}>{product.name}</h1>
-                            <h1 className={price_style}>₱{product.price}</h1>
-                        </div>  
-                    </div>
-                    </>
-                })}
+                        </>
+                    })}
+                </div>
             </div>
-    </>
 }
