@@ -30,7 +30,7 @@ export default function Products(props: MyComponents){
         
         const fetchData = async () => {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coffee/product/${props.coffeeId}`, {
-                method: "POST",
+                method: "GET",
                 credentials: "include"
             })
 
