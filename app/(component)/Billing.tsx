@@ -33,23 +33,25 @@ export default function Billing(){
         );
     }, [products]);
 
-    useEffect(() => {
-        const fetchUpdate = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills/${method}/${name}`, {
-                method: "PUT",
-                credentials: "include"
+    const updateQuantity = async (name: string, method: string) => {
+        setProducts(prev =>
+            prev.map(p =>
+                p.name === name
+                    ? {
+                        ...p,
+                        quantity: method === "add"
+                            ? p.quantity + 1
+                            : Math.max(0, p.quantity - 1)
+                    }
+                    : p
+            )
+        );
 
-            });
-
-            const data = await response.json();
-
-            if(!data.success) return alert("ERROR IN THE USEEFFECT OF BILLING");
-
-            fetchData();
-        }
-
-        fetchUpdate();
-    }, [refresh])
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills/${method}/${name}`, {
+            method: "PUT",
+            credentials: "include"
+        });
+    };
 
     return <div className="w-full max-w-[350px] bg-[rgba(228,228,228,0.8)] p-6 rounded-2xl">
         <h1 className="text-black text-xl mb-4 font-bold">Bills</h1>
@@ -65,15 +67,11 @@ export default function Billing(){
                                     <p className="flex flex-col text-[rgba(86,132,75,0.8)] font-bold">Notes</p>
                                     <p className="flex flex-col text-black font-bold w-full max-w-[10px] rounded-full cursor-pointer" 
                                     onClick={() => {
-                                        setName(product.name);
-                                        setMethod("minus");
-                                        setRefresh(!refresh);
+                                        updateQuantity(product.name, "minus");
                                     }}>-</p>
                                     <p className="flex flex-col text-black font-bold w-full max-w-[30px] rounded-full cursor-pointer" 
                                     onClick={() => {
-                                        setName(product.name);
-                                        setMethod("add");
-                                        setRefresh(!refresh);
+                                         updateQuantity(product.name, "add");
                                     }}>+</p>
                                     <p className="flex flex-col text-[rgba(153,153,153,0.79)] font-bold">₱{product.price * product.quantity}</p>
                                 </div>
