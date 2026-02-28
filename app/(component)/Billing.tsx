@@ -4,44 +4,78 @@ import Button from "./Button";
 
 export default function Billing(){
     const [products, setProducts] = useState<any[]>([]);
+    const [name, setName] = useState<string>("");
+    const [method, setMethod] = useState<string>("");
+    const [refresh, setRefresh] = useState<boolean>(false);
+    
+    const fetchData = async () => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills`, {
+            method: 'GET',
+            credentials: 'include'
+        });
 
-        useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills`, {
-                method: 'GET',
-                credentials: 'include'
-            });
+        const data = await response.json();
 
-            const data = await response.json();
+        if(!data.success) return alert("ERROR IN THE CARTS USEEFFECT");
 
-            if(!data.success) return alert("ERROR IN THE CARTS USEEFFECT");
+        setProducts(data.data);
+        console.log(data.data);
+    }
 
-            setProducts(data.data);
-            console.log(data.data);
-        }
-
+    useEffect(() => {
         fetchData();
     }, []);
 
     let subtotal = useMemo(() => {
+        console.log(products);
         return products.reduce(
             (sum, product) => sum + product.quantity * product.price, 0
         );
     }, [products]);
 
+    useEffect(() => {
+        const fetchUpdate = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills/${method}/${name}`, {
+                method: "PUT",
+                credentials: "include"
+
+            });
+
+            const data = await response.json();
+
+            if(!data.success) return alert("ERROR IN THE USEEFFECT OF BILLING");
+
+            fetchData();
+        }
+
+        fetchUpdate();
+    }, [refresh])
+
     return <div className="w-full max-w-[350px] bg-[rgba(228,228,228,0.8)] p-6 rounded-2xl">
         <h1 className="text-black text-xl mb-4 font-bold">Bills</h1>
-            {products.map((product, index) => {
-                return  <div className="flex gap-2" key={index}>
+            {products.map((product) => {
+                return  <div className="flex gap-2" key={product.name}>
                             <div className="w-15 h-12 bg-[rgba(125,171,114,0.8)] mb-5 rounded-xl flex items-center justify-center">
                                 <img src={product.image} alt={product.name} className="flex flex-col w-10 h-10"></img>
                             </div>
                             <div className="flex flex-col">
                                 <h1 className="text-black text-[14px] font-bold">{product.name}</h1>
-                                <div className="flex gap-10 text-sm">
+                                <div className="flex gap-8 text-sm">
                                     <p className="flex flex-col text-black font-bold">x{product.quantity}</p>
                                     <p className="flex flex-col text-[rgba(86,132,75,0.8)] font-bold">Notes</p>
-                                    <p className="flex flex-col text-[rgba(153,153,153,0.79)] ml-14 font-bold">₱{product.price * product.quantity}</p>
+                                    <p className="flex flex-col text-black font-bold w-full max-w-[10px] rounded-full cursor-pointer" 
+                                    onClick={() => {
+                                        setName(product.name);
+                                        setMethod("minus");
+                                        setRefresh(!refresh);
+                                    }}>-</p>
+                                    <p className="flex flex-col text-black font-bold w-full max-w-[30px] rounded-full cursor-pointer" 
+                                    onClick={() => {
+                                        setName(product.name);
+                                        setMethod("add");
+                                        setRefresh(!refresh);
+                                    }}>+</p>
+                                    <p className="flex flex-col text-[rgba(153,153,153,0.79)] font-bold">₱{product.price * product.quantity}</p>
                                 </div>
                             </div>
                         </div>
