@@ -30,11 +30,13 @@ export default function Carts(){
         fetchData();
     }, [])
 
+    if(products.length === 0) return <h1 className='flex flex-col w-full max-w-[920px] text-[rgba(153,153,153,0.79)]
+        text-sm text-center'>No available carts, please click order now and <br></br>
+                            click add to cart</h1>
+
     return <div className="flex flex-col w-full max-w-[920px]">
         <div className="flex flex-wrap gap-15 justify-center">
                     {products.map((product, index) => {
-                        console.log(product.category)
-                        console.log(product.image);
                         return <>
                         <div className={outer_card} key={index}>
                             <div className={middle_card}>
