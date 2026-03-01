@@ -106,7 +106,7 @@ export default function Products(props: MyComponents){
     }
 
     return <>
-        <div className="p-20 flex flex-wrap gap-10 justify-center">
+        <div className="p-2 flex flex-wrap gap-10 justify-center">
             {products.map((product, index) => {
                 console.log(product.category)
                 console.log(product.image);
