@@ -1,7 +1,6 @@
 "use client";
 import Carts from "../(component)/Carts";
 import Billing from "../(component)/Billing";
-import Footer from "../(component)/Footer";
 
 export default function Cart(){
    return <>
@@ -9,6 +8,5 @@ export default function Cart(){
          <Carts />
          <Billing />
       </div>
-      <Footer />
    </>
 }

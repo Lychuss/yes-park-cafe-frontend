@@ -5,7 +5,7 @@ const outer_card: string = "w-90 h-115 text-black border border-[rgba(153,153,15
 const middle_card: string = "w-80 h-80 bg-[rgba(86,132,75,0.8)] rounded-xl relative overflow-hidden self-center";
 const inner_circle: string = `w-110 h-110 bg-[rgba(125,171,114,0.8)] rounded-full flex items-center justify-center
 absolute top-3/6 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-40`;
-const image_style: string = "object-cover rounded-lg w-55 h-55 self-center mb-95";
+const image_style: string = "object-cover rounded-lg w-55 h-50 self-center mb-95";
 const title_style: string = "text-xl text-black font-bold mr-32 absolute break-words";
 const price_style: string = "text-3xl text-[rgba(125,171,114,0.8)] font-bold translate-x-50 absolute";
 
@@ -30,7 +30,7 @@ export default function Carts(){
         fetchData();
     }, [])
 
-    return <div className="flex flex-col w-full max-w-[950px]">
+    return <div className="flex flex-col w-full max-w-[920px]">
         <div className="flex flex-wrap gap-15 justify-center">
                     {products.map((product, index) => {
                         console.log(product.category)
