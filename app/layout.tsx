@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono,  Playfair_Display, Inter } from "next/font/google";
 import Header from "./(component)/Header";
+import Footer from "./(component)/Footer";
 import "./globals.css";
+import Copyright from "./(component)/Copyright";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -40,6 +42,8 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <Footer />
+        <Copyright />
       </body>
     </html>
   );
