@@ -194,7 +194,7 @@ export default function Products(props: MyComponents){
             })}
         </div>
         {cartShow &&
-        <div className="absolute rounded-full bg-[rgba(86,132,75,0.8)] top-9 right-145 flex items-center w-4 h-4 justify-center text-center text-[9px] font-bold">
+        <div className="absolute rounded-full bg-[rgba(86,132,75,0.8)] top-9 right-161 flex items-center w-4 h-4 justify-center text-center text-[9px] font-bold">
             <h1>{totalCart}</h1>
         </div>}
     </>
