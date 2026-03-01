@@ -2,6 +2,7 @@
 
 import Button from "./Button";
 import { useRouter } from "next/navigation";
+import Error from "./Error";
 
 const h1_style: string = `text-black font-serif font-bold h-7 mt-10 ml-7 cursor-pointer border-b-2 border-transparent
             hover:border-yellow-950 transition-color duration-500`;
@@ -39,6 +40,7 @@ export default function Header(){
             <h1 className={h1_style} onClick={() => isClick("store")}>Store</h1>
             <Button onClick={() => isClick("all-products")} className="ml-70 bg-yellow-950 font-serif
              px-6 py-2 w-33 h-12 mt-7 hover:scale-110 cursor-pointer transition duration-200" label="Order Now"/>
+             
         </div>
     </>
 }
