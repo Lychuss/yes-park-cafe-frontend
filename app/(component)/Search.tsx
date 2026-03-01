@@ -10,7 +10,8 @@ export default function Search(props: MyComponent){
     <div className="relative">
         <input id="search" className={props.className} placeholder={props.placeholder}></input>
         <Button onClick={() => console.log("hello")} className="bg-yellow-950 font-serif
-             px-10 py-3 absolute right-2 top-4/6 -translate-y-1/2 cursor-pointer" label="Search"/>
+             px-10 py-3 absolute right-2 top-4/6 -translate-y-1/2 cursor-pointer hover:text-black
+             transition-color duration-200" label="Search"/>
     </div>
     </>
 }
