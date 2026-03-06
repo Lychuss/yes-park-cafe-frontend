@@ -4,6 +4,9 @@ import Button from "./Button";
 
 export default function Billing(){
     const [products, setProducts] = useState<any[]>([]);
+    const [payment, setPayment] = useState<number>(0);
+    const [method, setMethod] = useState<string>("");
+    const [isActive, setActive] = useState<string>("");
     
     const fetchData = async () => {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills`, {
@@ -50,6 +53,28 @@ export default function Billing(){
         });
     };
 
+    const printBills = async (payment: number, method: string) => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/create-payment`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                payment: payment,
+                total_amount: (subtotal - subtotal * 0.10).toFixed(2),
+                payment_method: method
+            })
+        });
+
+        console.log((subtotal - subtotal * 0.10).toFixed(2));
+        const data = await response.json();
+
+        if(!data.success) return alert("Error in getting print bills");
+
+        window.location.href = data.invoice_url;
+    }
+
     return <div className="w-full max-w-[380px] bg-[rgba(228,228,228,0.8)] p-6 rounded-2xl">
         <h1 className="text-black text-xl mb-4 font-bold">Bills</h1>
             {products.map((product) => {
@@ -84,21 +109,33 @@ export default function Billing(){
             </div>
             <div className="flex justify-between mt-4">
                 <h1 className="flex flex-col text-[15px] text-black font-bold mt-3">Total</h1>
-                <p className="flex flex-col text-[15px] text-black font-bold mt-3">₱{(subtotal -= subtotal * 0.10).toFixed(2)}</p>
+                <p className="flex flex-col text-[15px] text-black font-bold mt-3">₱{(subtotal - subtotal * 0.10).toFixed(2)}</p>
             </div>
             <div className="flex justify-between mt-10">
                 <h1 className="text-[16px] text-black font-bold mt-3">Payment Method</h1>
             </div>
             <div className="flex justify-between mt-4">
-                <div className="flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
-                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer">CASH</div>
-                <div className="flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
-                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer">G-CASH</div>
-                <div className="flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
-                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer">MAYA</div>
+                <div className={`flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
+                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer ${isActive === "cash" ? "bg-[rgba(86,132,75,0.8)] text-white" : ""}`} onClick={() => {
+                    setActive("cash");
+                    setPayment(1)
+                    setMethod('CASH')
+                }}>CASH</div>
+                <div className={`flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
+                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer ${isActive === "gcash" ? "bg-[rgba(86,132,75,0.8)] text-white" : ""}`} onClick={() => {
+                    setActive("gcash");
+                    setPayment(2)
+                    setMethod('GCASH')
+                }}>G-CASH</div>
+                <div className={`flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
+                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer ${isActive === "maya" ? "bg-[rgba(86,132,75,0.8)] text-white" : ""}`} onClick={() => {
+                    setActive("maya");
+                    setPayment(3)
+                    setMethod('MAYA')
+                }}>MAYA</div>
             </div>
             <div className="flex items-center justify-center">
-                <Button onClick={() => console.log("hello")} className="w-full p-3 mt-5
+                <Button onClick={() => printBills(payment, method)} className="w-full p-3 mt-5
                 rounded-2xl text-sm font-bold bg-[rgba(86,132,75,0.8)] cursor-pointer" label="Print Bills"/>
             </div>
     </div>
