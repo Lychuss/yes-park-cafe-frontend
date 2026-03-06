@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Button from "./Button";
+import Error from "./Error";
 
 type MyComponents = {
     coffeeId: string;
@@ -24,6 +25,9 @@ export default function Products(props: MyComponents){
     const [totalCart, setTotalCart] = useState<number>(0);
     const [cartShow, setCartShow] = useState<boolean>(false);
     const [size, setSize] = useState<number | null>(null);
+    const [error, setError] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>("");
+    const [visible, setVisible] = useState<boolean>(false);
 
     useEffect(() => {
         console.log(`${process.env.NEXT_PUBLIC_API_URL}/coffee/product/${props.coffeeId}`);
@@ -36,8 +40,11 @@ export default function Products(props: MyComponents){
 
             const data = await response.json();
 
-            if(!data.success) return alert('ERROR IN THE FIRST USEEFFECT OF PRODUCTS');
-
+            if(!data.success) {
+                setMessage(data.message);
+                setError(true);
+            } 
+            
             setProducts(data.data);
 
             console.log(data.data);
@@ -47,6 +54,24 @@ export default function Products(props: MyComponents){
         fetchData();
         console.log("coffeeId changed:", props.coffeeId);
     }, [props.coffeeId]);
+
+    useEffect(() => {
+        if(error) {
+            window.scrollTo(0, 0);
+            setVisible(true);
+        }
+        const time = setTimeout(() => {
+            setVisible(false);
+            
+            setTimeout(() => {
+                setError(false);    
+            }, 300)
+        }, 1000)
+
+        setCartShow(false);
+
+        return () => clearTimeout(time); 
+    }, [error])
 
 
     const add_cart = async (orderProduct: string, orderSize: number | null, orderQuantity: number) => {
@@ -67,7 +92,11 @@ export default function Products(props: MyComponents){
 
             console.log(data);
 
-            if(!data.success) return alert('ERROR IN THE SECOND USEEFFECT IN PRODUCTS');
+            if(!data.success){
+                setMessage(data.message);
+                setError(true);
+            } 
+               
 
             setTotalCart(data.data);
         }
@@ -105,8 +134,15 @@ export default function Products(props: MyComponents){
                     </div>
     }
 
+
     return <>
         <div className="p-2 flex flex-wrap gap-10 justify-center">
+            {error && (
+                <div className={`absolute top-5 z-50 transition-opacity duration-500 ease-in-out
+                ${visible ? "opacity-100" : "opacity-0" }`}>
+                    <Error label={message}/>
+                </div>
+            )}
             {products.map((product, index) => {
                 console.log(product.category)
                 console.log(product.image);
