@@ -1,6 +1,6 @@
 const pStyle = "mb-2 font-serif text-[#8c8a8bcc]";
 export default function Footer(){
-    return <div className="flex gap-25 bg-[#1a1502cc] p-10 justify-center">
+    return <div className="flex gap-25 bg-[#1a1502cc] p-10 justify-center mt-5">
         <div>
             <h1 className="text-2xl font-bold mb-5">CAFE AROMA</h1>
             <p className={pStyle}>Cafe Aroma Cafe</p>

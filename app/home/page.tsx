@@ -5,8 +5,6 @@ import Our from "../(component)/Our";
 import Galao from "../(component)/Galao";
 import Roast from "../(component)/Roast";
 import Ads from "../(component)/Ads";
-import Footer from "../(component)/Footer";
-import Copyright from "../(component)/Copyright";
 import Carousel from "../(component)/Carousel";
 import Entry from "../(component)/Entry";
 
@@ -69,10 +67,6 @@ export default function Home(){
         <Galao />
         <section className="p-20">
             <Ads />
-        </section>
-        <section>
-            <Footer />
-            <Copyright />
         </section>
     </>
 }

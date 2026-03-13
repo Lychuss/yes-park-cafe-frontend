@@ -1,0 +1,142 @@
+"use client";
+import { useEffect, useState, useMemo } from "react";
+import Button from "./Button";
+
+export default function Billing(){
+    const [products, setProducts] = useState<any[]>([]);
+    const [payment, setPayment] = useState<number>(0);
+    const [method, setMethod] = useState<string>("");
+    const [isActive, setActive] = useState<string>("");
+    
+    const fetchData = async () => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills`, {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        const data = await response.json();
+
+        if(!data.success) return alert("ERROR IN THE CARTS USEEFFECT");
+
+        setProducts(data.data);
+        console.log(data.data);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    let subtotal = useMemo(() => {
+        console.log(products);
+        return products.reduce(
+            (sum, product) => sum + product.quantity * product.price, 0
+        );
+    }, [products]);
+
+    const updateQuantity = async (name: string, method: string) => {
+        setProducts(prev =>
+            prev.map(p =>
+                p.name === name
+                    ? {
+                        ...p,
+                        quantity: method === "add"
+                            ? p.quantity + 1
+                            : Math.max(0, p.quantity - 1)
+                    }
+                    : p
+            )
+        );
+
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills/${method}/${name}`, {
+            method: "PUT",
+            credentials: "include"
+        });
+    };
+
+    const printBills = async (payment: number, method: string) => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/create-payment`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                payment: payment,
+                total_amount: (subtotal - subtotal * 0.10).toFixed(2),
+                payment_method: method
+            })
+        });
+
+        console.log((subtotal - subtotal * 0.10).toFixed(2));
+        const data = await response.json();
+
+        if(!data.success) return alert("Error in getting print bills");
+
+        window.location.href = data.invoice_url;
+    }
+
+    return <div className="w-full max-w-[380px] bg-[rgba(228,228,228,0.8)] p-6 rounded-2xl">
+        <h1 className="text-black text-xl mb-4 font-bold">Bills</h1>
+            {products.map((product) => {
+                return  <div className="flex gap-2" key={product.name}>
+                            <div className="w-full max-w-[50px] h-12 bg-[rgba(125,171,114,0.8)] mb-5 rounded-xl flex items-center justify-center">
+                                <img src={product.image} alt={product.name} className="flex flex-col w-full max-w-[40px] h-auto"></img>
+                            </div>
+                            <div className="flex flex-col">
+                                <h1 className="text-black text-[14px] font-bold">{product.name}</h1>
+                                <div className="flex gap-8 text-sm">
+                                    <p className="flex flex-col text-black font-bold">x{product.quantity}</p>
+                                    <p className="flex flex-col text-black font-bold w-full max-w-[10px] rounded-full cursor-pointer" 
+                                    onClick={() => {
+                                        updateQuantity(product.name, "minus");
+                                    }}>-</p>
+                                    <p className="flex flex-col text-black font-bold w-full max-w-[30px] rounded-full cursor-pointer mr-20" 
+                                    onClick={() => {
+                                         updateQuantity(product.name, "add");
+                                    }}>+</p>
+                                    <p className="flex flex-col text-[rgba(153,153,153,0.79)] font-bold">₱{(product.price * product.quantity).toFixed(2)}</p>
+                                </div>
+                            </div>
+                        </div>
+            })}
+            <div className="flex justify-between">
+                <h1 className="flex flex-col text-[13px] text-black font-bold mt-3">Subtotal</h1>
+                <p className="flex flex-col text-[13px] text-black font-bold mt-3">₱{subtotal}</p>
+            </div>
+            <div className="flex justify-between">
+                <h1 className="flex flex-col text-[13px] text-[rgba(153,153,153,0.79)] font-bold mt-3">Tax (10%)</h1>
+                <p className="flex flex-col text-[13px] text-[rgba(153,153,153,0.79)] mt-3">₱{(subtotal * 0.10).toFixed(2)}</p>
+            </div>
+            <div className="flex justify-between mt-4">
+                <h1 className="flex flex-col text-[15px] text-black font-bold mt-3">Total</h1>
+                <p className="flex flex-col text-[15px] text-black font-bold mt-3">₱{(subtotal - subtotal * 0.10).toFixed(2)}</p>
+            </div>
+            <div className="flex justify-between mt-10">
+                <h1 className="text-[16px] text-black font-bold mt-3">Payment Method</h1>
+            </div>
+            <div className="flex justify-between mt-4">
+                <div className={`flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
+                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer ${isActive === "cash" ? "bg-[rgba(86,132,75,0.8)] text-white" : ""}`} onClick={() => {
+                    setActive("cash");
+                    setPayment(1)
+                    setMethod('CASH')
+                }}>CASH</div>
+                <div className={`flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
+                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer ${isActive === "gcash" ? "bg-[rgba(86,132,75,0.8)] text-white" : ""}`} onClick={() => {
+                    setActive("gcash");
+                    setPayment(2)
+                    setMethod('GCASH')
+                }}>G-CASH</div>
+                <div className={`flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
+                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer ${isActive === "maya" ? "bg-[rgba(86,132,75,0.8)] text-white" : ""}`} onClick={() => {
+                    setActive("maya");
+                    setPayment(3)
+                    setMethod('MAYA')
+                }}>MAYA</div>
+            </div>
+            <div className="flex items-center justify-center">
+                <Button onClick={() => printBills(payment, method)} className="w-full p-3 mt-5
+                rounded-2xl text-sm font-bold bg-[rgba(86,132,75,0.8)] cursor-pointer" label="Print Bills"/>
+            </div>
+    </div>
+}
