@@ -1,5 +1,3 @@
-import Search from "./Search";
-
 export default function Entry(){
     return <>
         <img 
@@ -23,8 +21,6 @@ export default function Entry(){
                         </h1>
                         <p className="text-[#8c8a8bcc] text-[20px]  font-serif">Pure Coffee, pure community, pure experience, because you</p> 
                         <p className="text-[#8c8a8bcc] text-[20px] font-serif">can never have to much coffee in your life</p>
-        
-                        <Search className="border border-black w-100 pr-24 mt-6 h-12 placeholder-font-bold placeholder-black text-black pl-11" placeholder="Search Here" />
                         <img src="/images/magnifying-glass.png" 
                              alt="magnifying-glass"
                              className="absolute bottom-2 h-8 w-8 left-59">
