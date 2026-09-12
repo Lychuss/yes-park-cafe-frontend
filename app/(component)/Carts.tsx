@@ -1,56 +1,89 @@
-"use-client";
+"use client";
 import { useState, useEffect } from "react";
 
-const outer_card: string = "w-90 h-115 text-black border border-[rgba(153,153,153,0.79)] rounded-xl flex flex-col p-4";
-const middle_card: string = "w-80 h-80 bg-[rgba(86,132,75,0.8)] rounded-xl relative overflow-hidden self-center";
-const inner_circle: string = `w-110 h-110 bg-[rgba(125,171,114,0.8)] rounded-full flex items-center justify-center
-absolute top-3/6 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-40`;
-const image_style: string = "object-cover rounded-lg w-55 h-50 self-center mb-95";
-const title_style: string = "text-xl text-black font-bold mr-32 absolute break-words";
-const price_style: string = "text-3xl text-[rgba(125,171,114,0.8)] font-bold translate-x-50 absolute";
+const outer_card =
+  "w-full sm:w-72 md:w-80 border border-gray-400/70 rounded-xl flex flex-col p-4";
 
-export default function Carts(){
+const middle_card =
+  "w-full aspect-square bg-[rgba(86,132,75,0.8)] rounded-xl relative overflow-hidden flex items-center justify-center";
+
+const inner_circle =
+  "w-[140%] h-[140%] bg-[rgba(125,171,114,0.8)] rounded-full flex items-center justify-center";
+
+const image_style =
+  "object-contain w-32 sm:w-40 md:w-48";
+
+export default function Carts() {
+
     const [products, setProducts] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-cart`, {
-                method: 'GET',
-                credentials: 'include'
-            });
+
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/product/all-user-cart`,
+                {
+                    method: "GET",
+                    credentials: "include",
+                }
+            );
 
             const data = await response.json();
 
-            if(!data.success) return alert("ERROR IN THE CARTS USEEFFECT");
+            if (!data.success) return alert("ERROR IN THE CARTS USEEFFECT");
 
             setProducts(data.data);
-            console.log(data.data)
-        }
+        };
 
         fetchData();
-    }, [])
+    }, []);
 
-    if(products.length === 0) return <h1 className='flex flex-col w-full max-w-[920px] text-[rgba(153,153,153,0.79)]
-        text-sm text-center'>No available carts, please click order now and <br></br>
-                            click add to cart</h1>
+    if (products.length === 0)
+        return (
+            <h1 className="w-full max-w-xl text-gray-500 text-sm text-center">
+                No available carts, please click order now and <br />
+                click add to cart
+            </h1>
+        );
 
-    return <div className="flex flex-col w-full max-w-[920px]">
-        <div className="flex flex-wrap gap-15 justify-center">
-                    {products.map((product, index) => {
-                        return <>
-                        <div className={outer_card} key={index}>
-                            <div className={middle_card}>
-                                <div className={inner_circle}>
-                                    <img src={product.image}alt={product} className={image_style} ></img>
-                                </div>
+    return (
+
+        <div className="w-full max-w-6xl mx-auto px-4">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+                {products.map((product, index) => (
+
+                    <div className={outer_card} key={index}>
+
+                        <div className={middle_card}>
+                            <div className={inner_circle}>
+                                <img
+                                    src={product.image}
+                                    alt={product.name}
+                                    className={image_style}
+                                />
                             </div>
-                            <div className="flex justify-between gap-32 p-3 relative">
-                                <h1 className={title_style}>{product.name}</h1>
-                                <h1 className={price_style}>₱{product.price}</h1>
-                            </div>  
                         </div>
-                        </>
-                    })}
-                </div>
+
+                        <div className="flex justify-between items-center mt-4">
+
+                            <h1 className="text-lg font-bold break-words">
+                                {product.name}
+                            </h1>
+
+                            <h1 className="text-xl font-bold text-[rgba(125,171,114,0.8)]">
+                                ₱{product.price}
+                            </h1>
+
+                        </div>
+
+                    </div>
+
+                ))}
+
             </div>
+
+        </div>
+    );
 }
