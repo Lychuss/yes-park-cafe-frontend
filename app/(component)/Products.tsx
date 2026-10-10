@@ -3,78 +3,97 @@
 import { useState, useEffect } from "react";
 import Button from "./Button";
 import Error from "./Error";
+import { emitCartCount } from "./cartEvents";
 
 type MyComponents = {
     coffeeId: string;
 }
 
-const outer_card: string = "w-90 h-115 text-black border border-[rgba(153,153,153,0.79)] rounded-xl flex flex-col p-4";
-const middle_card: string = "w-80 h-80 bg-[rgba(86,132,75,0.8)] rounded-xl relative overflow-hidden self-center";
-const inner_circle: string = `w-110 h-110 bg-[rgba(125,171,114,0.8)] rounded-full flex items-center justify-center
-absolute top-3/6 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-40`;
-const image_style: string = "object-cover rounded-lg w-55 h-55 self-center mb-95";
-const title_style: string = "text-xl text-black font-bold mr-32 absolute break-words";
-const price_style: string = "text-3xl text-[rgba(125,171,114,0.8)] font-bold translate-x-50 absolute";
-const circle_style: string = "transition-colors duration-500 ease-in-out hover:bg-[rgba(125,171,114,0.8)] rounded-full w-15 h-15 flex justify-center items-center cursor-pointer";
-const oz_style: string = "text-[10px] text-[rgba(153,153,153,0.79)] font-bold"
+type Product = {
+    id?: string | number;
+    name: string;
+    image: string;
+    price: number;
+    category: string;
+}
+
+const SIZES = [
+    { label: "Tall", oz: 12, icon: "h-5 w-5" },
+    { label: "Grande", oz: 16, icon: "h-6 w-6" },
+    { label: "Venti", oz: 24, icon: "h-7 w-7" },
+    { label: "Trenta", oz: 32, icon: "h-8 w-8" },
+];
+
+const outer_card: string = "flex w-full max-w-[360px] flex-col rounded-xl border border-[rgba(153,153,153,0.79)] p-4 text-black";
+const middle_card: string = "relative aspect-square w-full self-center overflow-hidden rounded-xl bg-[rgba(86,132,75,0.8)]";
+const inner_circle: string = "absolute left-1/2 top-[31.25%] aspect-square w-[137.5%] -translate-x-1/2 rounded-full bg-[rgba(125,171,114,0.8)]";
+const image_style: string = "absolute left-1/2 top-[6.25%] h-[68.75%] w-[68.75%] -translate-x-1/2 rounded-lg object-cover";
+const title_style: string = "min-w-0 break-words text-lg font-bold text-black sm:text-xl";
+const price_style: string = "shrink-0 text-2xl font-bold text-[rgba(125,171,114,0.8)] sm:text-3xl";
+const circle_style: string = "flex h-14 w-14 cursor-pointer items-center justify-center rounded-full transition-colors duration-500 ease-in-out hover:bg-[rgba(125,171,114,0.8)]";
+const oz_style: string = "text-[10px] font-bold text-[rgba(153,153,153,0.79)]";
+const qty_button: string = `flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-[rgba(86,132,75,0.8)]
+    text-2xl leading-none text-white transition-colors duration-500 ease-in-out`;
 
 export default function Products(props: MyComponents){
-    const [products, setProducts] = useState<any[]>([]);
+
+    const [products, setProducts] = useState<Product[]>([]);
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
-    const [totalCart, setTotalCart] = useState<number>(0);
-    const [cartShow, setCartShow] = useState<boolean>(false);
     const [size, setSize] = useState<number | null>(null);
     const [error, setError] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
     const [visible, setVisible] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log(`${process.env.NEXT_PUBLIC_API_URL}/coffee/product/${props.coffeeId}`);
-        
+        let cancelled = false;
+
         const fetchData = async () => {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coffee/product/${props.coffeeId}`, {
-                method: "GET",
-                credentials: "include"
-            })
+            try {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/coffee/product/${props.coffeeId}`,
+                    { method: "GET", credentials: "include"}
+                );
+                const data = await response.json();
+                if (cancelled) return;
 
-            const data = await response.json();
+                if (!data.success) {
+                    setMessage(data.message);
+                    setError(true);
+                    return;
+                }
+                setProducts(data.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
 
-            if(!data.success) {
-                setMessage(data.message);
-                setError(true);
-            } 
-            
-            setProducts(data.data);
-
-            console.log(data.data);
-            
-        }
-
+        setActiveIndex(null);
+        setQuantities({});
         fetchData();
-        console.log("coffeeId changed:", props.coffeeId);
+
+        return () => { cancelled = true; };
     }, [props.coffeeId]);
 
+    // Show the error toast for 1s, fade it out, then remove it.
     useEffect(() => {
-        if(error) {
-            window.scrollTo(0, 0);
-            setVisible(true);
-        }
-        const time = setTimeout(() => {
+        if (!error) return;
+
+        setVisible(true);
+        let removeTimer: ReturnType<typeof setTimeout> | undefined;
+        const hideTimer = setTimeout(() => {
             setVisible(false);
-            
-            setTimeout(() => {
-                setError(false);    
-            }, 300)
-        }, 1000)
+            removeTimer = setTimeout(() => setError(false), 300);
+        }, 1000);
 
-        setCartShow(false);
-
-        return () => clearTimeout(time); 
-    }, [error])
-
+        return () => {
+            clearTimeout(hideTimer);
+            if (removeTimer) clearTimeout(removeTimer);
+        };
+    }, [error]);
 
     const add_cart = async (orderProduct: string, orderSize: number | null, orderQuantity: number) => {
+        try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/add-cart`, {
                 method: 'POST',
                 headers: {
@@ -90,148 +109,110 @@ export default function Products(props: MyComponents){
 
             const data = await response.json();
 
-            console.log(data);
-
             if(!data.success){
                 setMessage(data.message);
                 setError(true);
-            } 
-               
+                return;
+            }
 
-            setTotalCart(data.data);
+            // Header listens for this and shows the number on the Cart link.
+            emitCartCount(data.data);
+        } catch (err) {
+            console.error(err);
+            setMessage("Something went wrong. Please try again.");
+            setError(true);
         }
-
-    const sizeClick = (index: number, height: number, name: string, orderCategory: string) => {
-        return <div className={`mt-${height} ml-7 flex`}>
-                        <div className="transition-colors duration-500 ease-in-out bg-[rgba(86,132,75,0.8)] 
-                        rounded-full w-9 h-9 flex justify-center items-center text-3xl text-white mt-2 cursor-pointer"
-                        onClick={() => 
-                                setQuantities(prev => ({
-                                    ...prev,
-                                    [index]: (prev[index] || 0) > 0 ? prev[index] - 1 : 0
-                                }))}>
-                            <p>-</p>
-                        </div>
-                        <h1 className="text-2xl self-center mx-3">
-                            {quantities[index] || 0}
-                        </h1>
-                        <div className="transition-colors duration-500 ease-in-out bg-[rgba(86,132,75,0.8)] 
-                        rounded-full w-9 h-9 flex justify-center items-center text-2xl text-white mt-2 cursor-pointer"
-                        onClick={() =>
-                                setQuantities(prev => ({
-                                    ...prev,
-                                    [index]: (prev[index] || 0) + 1
-                                }))}>
-                            <p>+</p>
-                        </div>
-                        <Button onClick={() => { 
-                            const quantity = quantities[index] | 0;
-                            const product_size = orderCategory === 'coffees' ? size : null;
-                            add_cart(name, product_size, quantity);
-                            setCartShow(true); 
-                            }} className="bg-[rgba(86,132,75,0.8)] font-sans ml-5 w-38 p-3 h-13 rounded-4xl font-bold text-white
-                            cursor-pointer" label="Add to Order"/>
-                    </div>
     }
 
+    const selectSize = (index: number, oz: number) => {
+        const sameSizeAlreadyOpen = activeIndex === index && size === oz;
+        setActiveIndex(sameSizeAlreadyOpen ? null : index);
+        setQuantities(prev => ({ ...prev, [index]: 0 }));
+        setSize(oz);
+    };
+
+    const changeQuantity = (index: number, delta: 1 | -1) => {
+        setQuantities(prev => ({
+            ...prev,
+            [index]: Math.max(0, (prev[index] || 0) + delta)
+        }));
+    };
+
+    const renderControls = (index: number, product: Product) => (
+        <div className="flex flex-wrap items-center gap-3 pt-4">
+            <div className="flex items-center gap-3">
+                <button type="button" aria-label="Decrease quantity" className={qty_button} onClick={() => changeQuantity(index, -1)}>
+                    <span>-</span>
+                </button>
+                <span className="min-w-[1.5rem] text-center text-2xl">{quantities[index] || 0}</span>
+                <button type="button" aria-label="Increase quantity" className={qty_button} onClick={() => changeQuantity(index, 1)}>
+                    <span>+</span>
+                </button>
+            </div>
+            <Button
+                onClick={() => {
+                    const quantity = quantities[index] ?? 0;
+                    const product_size = product.category === "coffees" ? size : null;
+                    add_cart(product.name, product_size, quantity);
+                }}
+                className="h-12 min-w-[120px] flex-1 cursor-pointer rounded-full bg-[rgba(86,132,75,0.8)] px-4 font-sans font-bold text-white"
+                label="Add to Order"
+            />
+        </div>
+    );
 
     return <>
-        <div className="p-2 flex flex-wrap gap-10 justify-center">
-            {error && (
-                <div className={`absolute top-5 z-50 transition-opacity duration-500 ease-in-out
-                ${visible ? "opacity-100" : "opacity-0" }`}>
-                    <Error label={message}/>
-                </div>
-            )}
+        {error && (
+            <div
+                role="alert"
+                className={`fixed left-1/2 top-4 z-50 w-max max-w-[92vw] -translate-x-1/2 transition-opacity duration-500 ease-in-out
+                ${visible ? "opacity-100" : "opacity-0" }`}
+            >
+                <Error label={message}/>
+            </div>
+        )}
+        <div className="mx-auto grid w-full max-w-[1440px] grid-cols-[repeat(auto-fill,minmax(min(100%,17.5rem),1fr))] items-start justify-items-center gap-6 px-4 py-6 sm:gap-8 sm:px-6 lg:gap-10 lg:px-10">
             {products.map((product, index) => {
-                console.log(product.category)
-                console.log(product.image);
-                return <>
-                <div className={outer_card} key={index}>
-                    <div className={middle_card}>
-                        <div className={inner_circle}>
-                            <img src={product.image}alt={product} className={image_style} ></img>
+                const isCoffee = product.category === "coffees";
+                return (
+                    <article className={outer_card} key={product.id ?? index}>
+                        <div className={middle_card}>
+                            <div className={inner_circle} />
+                            <img src={product.image} alt={product.name} className={image_style} />
                         </div>
-                    </div>
-                    <div className="flex justify-between gap-32 p-3 relative">
-                        <h1 className={title_style}>{product.name}</h1>
-                        <h1 className={price_style}>₱{product.price}</h1>
-                        {product.category === "coffees" && (
-                            <div className="top-20 left-0 w-full flex justify-center gap-4 mt-15">
-                                <div className="flex flex-col items-center gap-2">
-                                    <div className={circle_style} onClick={() => {
-                                        setActiveIndex(activeIndex === index ? null : index);
-                                            setQuantities(prev => ({
-                                                ...prev,
-                                                [index]: 0
-                                            }));
-                                        setSize(12);
-                                    }}>
-                                        <img src="/images/grande-icon.png" alt="tall" className="w-5 h-5" />
-                                    </div>
-                                    <h1 className="text-sm">Tall</h1>
-                                    <p className={oz_style}>12 oz</p>
-                                </div>
 
-                                <div className="flex flex-col items-center gap-2">
-                                    <div className={circle_style} onClick={() => {
-                                        setActiveIndex(activeIndex === index ? null : index);
-                                         setActiveIndex(activeIndex === index ? null : index);
-                                            setQuantities(prev => ({
-                                                ...prev,
-                                                [index]: 0
-                                            }));                        
-                                        setSize(16);               
-                                    }}>
-                                        <img src="/images/grande-icon.png" alt="grande" className="w-6 h-6" />
-                                    </div>
-                                    <h1 className="text-sm">Grande</h1>
-                                    <p className={oz_style}>16 oz</p>
-                                </div>
+                        <div className="flex items-start justify-between gap-3 px-1 pt-4">
+                            <h2 className={title_style}>{product.name}</h2>
+                            <p className={price_style}>₱{product.price}</p>
+                        </div>
 
-                                <div className="flex flex-col items-center gap-2">
-                                    <div className={circle_style} onClick={() => {
-                                        setActiveIndex(activeIndex === index ? null : index);
-                                            setQuantities(prev => ({
-                                                ...prev,
-                                                [index]: 0
-                                            }));
-                                        setSize(24);
-                                        setActiveIndex(activeIndex === index ? null : index)
-                                    }}>
-                                        <img src="/images/grande-icon.png" alt="venti" className="w-7 h-7" />
-                                    </div>
-                                    <h1 className="text-sm">Venti</h1>
-                                    <p className={oz_style}>24 oz</p>
-                                </div>
-
-                                <div className="flex flex-col items-center gap-2">
-                                    <div className={circle_style} onClick={() => {
-                                        setActiveIndex(activeIndex === index ? null : index);
-                                            setQuantities(prev => ({
-                                                ...prev,
-                                                [index]: 0
-                                            }));
-                                        setSize(32);
-                                        setActiveIndex(activeIndex === index ? null : index)
-                                    }}>
-                                        <img src="/images/grande-icon.png" alt="trenta" className="w-8 h-8" />
-                                    </div>
-                                    <h1 className="text-sm">Trenta</h1>
-                                    <p className={oz_style}>32 oz</p>
-                                </div>
+                        {isCoffee && (
+                            <div className="grid grid-cols-4 gap-1 pt-4">
+                                {SIZES.map((item) => {
+                                    const selected = activeIndex === index && size === item.oz;
+                                    return (
+                                        <div key={item.label} className="flex flex-col items-center gap-1">
+                                            <button
+                                                type="button"
+                                                aria-pressed={selected}
+                                                aria-label={`${item.label} ${item.oz} oz`}
+                                                className={`${circle_style} ${selected ? "bg-[rgba(125,171,114,0.8)]" : ""}`}
+                                                onClick={() => selectSize(index, item.oz)}
+                                            >
+                                                <img src="/images/grande-icon.png" alt="" className={item.icon} />
+                                            </button>
+                                            <span className="text-sm">{item.label}</span>
+                                            <span className={oz_style}>{item.oz} oz</span>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         )}
-                    </div>
-                    {product.category === "coffees" && activeIndex === index && sizeClick(index, 0, product.name, product.category)}
-                    {product.category !== "coffees" && sizeClick(index, 15, product.name, product.category)}    
-                </div>
-                </>
+
+                        {isCoffee ? (activeIndex === index && renderControls(index, product)) : renderControls(index, product)}
+                    </article>
+                );
             })}
         </div>
-        {cartShow &&
-        <div className="absolute rounded-full bg-[rgba(86,132,75,0.8)] top-9 right-161 flex items-center w-4 h-4 justify-center text-center text-[9px] font-bold">
-            <h1>{totalCart}</h1>
-        </div>}
     </>
 }

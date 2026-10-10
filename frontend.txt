@@ -1,30 +1,1582 @@
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\layout.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\page.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Ads.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Billing.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Button.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Carousel.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Carts.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Copyright.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Entry.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\FirstStory.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Footer.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Galao.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Header.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Inquire.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Menu.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Our.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Products.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Roast.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\Search.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\(component)\SecondStory.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\cart\loading.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\cart\page.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\coffee\loading.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\coffee\page.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\coffee\[category]\loading.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\coffee\[category]\page.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\home\loading.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\home\page.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\store\loading.tsx
-C:\coffee-shop-frontend\Frontend\coffee-shop-frontend\app\store\page.tsx
+﻿
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\.next\dev\types\cache-life.d.ts =====
+
+// Type definitions for Next.js cacheLife configs
+
+declare module 'next/cache' {
+  export { unstable_cache } from 'next/dist/server/web/spec-extension/unstable-cache'
+  export {
+    updateTag,
+    revalidateTag,
+    revalidatePath,
+    refresh,
+  } from 'next/dist/server/web/spec-extension/revalidate'
+  export { unstable_noStore } from 'next/dist/server/web/spec-extension/unstable-no-store'
+
+  
+    /**
+     * Cache this `"use cache"` for a timespan defined by the `"default"` profile.
+     * ```
+     *   stale:      300 seconds (5 minutes)
+     *   revalidate: 900 seconds (15 minutes)
+     *   expire:     never
+     * ```
+     * 
+     * This cache may be stale on clients for 5 minutes before checking with the server.
+     * If the server receives a new request after 15 minutes, start revalidating new values in the background.
+     * It lives for the maximum age of the server cache. If this entry has no traffic for a while, it may serve an old value the next request.
+     */
+    export function cacheLife(profile: "default"): void
+    
+    /**
+     * Cache this `"use cache"` for a timespan defined by the `"seconds"` profile.
+     * ```
+     *   stale:      30 seconds
+     *   revalidate: 1 seconds
+     *   expire:     60 seconds (1 minute)
+     * ```
+     * 
+     * This cache may be stale on clients for 30 seconds before checking with the server.
+     * If the server receives a new request after 1 seconds, start revalidating new values in the background.
+     * If this entry has no traffic for 1 minute it will expire. The next request will recompute it.
+     */
+    export function cacheLife(profile: "seconds"): void
+    
+    /**
+     * Cache this `"use cache"` for a timespan defined by the `"minutes"` profile.
+     * ```
+     *   stale:      300 seconds (5 minutes)
+     *   revalidate: 60 seconds (1 minute)
+     *   expire:     3600 seconds (1 hour)
+     * ```
+     * 
+     * This cache may be stale on clients for 5 minutes before checking with the server.
+     * If the server receives a new request after 1 minute, start revalidating new values in the background.
+     * If this entry has no traffic for 1 hour it will expire. The next request will recompute it.
+     */
+    export function cacheLife(profile: "minutes"): void
+    
+    /**
+     * Cache this `"use cache"` for a timespan defined by the `"hours"` profile.
+     * ```
+     *   stale:      300 seconds (5 minutes)
+     *   revalidate: 3600 seconds (1 hour)
+     *   expire:     86400 seconds (1 day)
+     * ```
+     * 
+     * This cache may be stale on clients for 5 minutes before checking with the server.
+     * If the server receives a new request after 1 hour, start revalidating new values in the background.
+     * If this entry has no traffic for 1 day it will expire. The next request will recompute it.
+     */
+    export function cacheLife(profile: "hours"): void
+    
+    /**
+     * Cache this `"use cache"` for a timespan defined by the `"days"` profile.
+     * ```
+     *   stale:      300 seconds (5 minutes)
+     *   revalidate: 86400 seconds (1 day)
+     *   expire:     604800 seconds (1 week)
+     * ```
+     * 
+     * This cache may be stale on clients for 5 minutes before checking with the server.
+     * If the server receives a new request after 1 day, start revalidating new values in the background.
+     * If this entry has no traffic for 1 week it will expire. The next request will recompute it.
+     */
+    export function cacheLife(profile: "days"): void
+    
+    /**
+     * Cache this `"use cache"` for a timespan defined by the `"weeks"` profile.
+     * ```
+     *   stale:      300 seconds (5 minutes)
+     *   revalidate: 604800 seconds (1 week)
+     *   expire:     2592000 seconds (1 month)
+     * ```
+     * 
+     * This cache may be stale on clients for 5 minutes before checking with the server.
+     * If the server receives a new request after 1 week, start revalidating new values in the background.
+     * If this entry has no traffic for 1 month it will expire. The next request will recompute it.
+     */
+    export function cacheLife(profile: "weeks"): void
+    
+    /**
+     * Cache this `"use cache"` for a timespan defined by the `"max"` profile.
+     * ```
+     *   stale:      300 seconds (5 minutes)
+     *   revalidate: 2592000 seconds (1 month)
+     *   expire:     31536000 seconds (365 days)
+     * ```
+     * 
+     * This cache may be stale on clients for 5 minutes before checking with the server.
+     * If the server receives a new request after 1 month, start revalidating new values in the background.
+     * If this entry has no traffic for 365 days it will expire. The next request will recompute it.
+     */
+    export function cacheLife(profile: "max"): void
+    
+    /**
+     * Cache this `"use cache"` using a custom timespan.
+     * ```
+     *   stale: ... // seconds
+     *   revalidate: ... // seconds
+     *   expire: ... // seconds
+     * ```
+     *
+     * This is similar to Cache-Control: max-age=`stale`,s-max-age=`revalidate`,stale-while-revalidate=`expire-revalidate`
+     *
+     * If a value is left out, the lowest of other cacheLife() calls or the default, is used instead.
+     */
+    export function cacheLife(profile: {
+      /**
+       * This cache may be stale on clients for ... seconds before checking with the server.
+       */
+      stale?: number,
+      /**
+       * If the server receives a new request after ... seconds, start revalidating new values in the background.
+       */
+      revalidate?: number,
+      /**
+       * If this entry has no traffic for ... seconds it will expire. The next request will recompute it.
+       */
+      expire?: number
+    }): void
+  
+
+  import { cacheTag } from 'next/dist/server/use-cache/cache-tag'
+  export { cacheTag }
+
+  export const unstable_cacheTag: typeof cacheTag
+  export const unstable_cacheLife: typeof cacheLife
+}
+
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\.next\dev\types\routes.d.ts =====
+
+// This file is generated automatically by Next.js
+// Do not edit this file manually
+
+type AppRoutes = "/" | "/cart" | "/coffee" | "/coffee/[category]" | "/home" | "/store"
+type PageRoutes = never
+type LayoutRoutes = "/"
+type RedirectRoutes = never
+type RewriteRoutes = never
+type Routes = AppRoutes | PageRoutes | LayoutRoutes | RedirectRoutes | RewriteRoutes
+
+
+interface ParamMap {
+  "/": {}
+  "/cart": {}
+  "/coffee": {}
+  "/coffee/[category]": { "category": string; }
+  "/home": {}
+  "/store": {}
+}
+
+
+export type ParamsOf<Route extends Routes> = ParamMap[Route]
+
+interface LayoutSlotMap {
+  "/": never
+}
+
+
+export type { AppRoutes, PageRoutes, LayoutRoutes, RedirectRoutes, RewriteRoutes, ParamMap }
+
+declare global {
+  /**
+   * Props for Next.js App Router page components
+   * @example
+   * ```tsx
+   * export default function Page(props: PageProps<'/blog/[slug]'>) {
+   *   const { slug } = await props.params
+   *   return <div>Blog post: {slug}</div>
+   * }
+   * ```
+   */
+  interface PageProps<AppRoute extends AppRoutes> {
+    params: Promise<ParamMap[AppRoute]>
+    searchParams: Promise<Record<string, string | string[] | undefined>>
+  }
+
+  /**
+   * Props for Next.js App Router layout components
+   * @example
+   * ```tsx
+   * export default function Layout(props: LayoutProps<'/dashboard'>) {
+   *   return <div>{props.children}</div>
+   * }
+   * ```
+   */
+  type LayoutProps<LayoutRoute extends LayoutRoutes> = {
+    params: Promise<ParamMap[LayoutRoute]>
+    children: React.ReactNode
+  } & {
+    [K in LayoutSlotMap[LayoutRoute]]: React.ReactNode
+  }
+}
+
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\.next\dev\types\validator.ts =====
+
+// This file is generated automatically by Next.js
+// Do not edit this file manually
+// This file validates that all pages and layouts export the correct types
+
+import type { AppRoutes, LayoutRoutes, ParamMap } from "./routes.js"
+import type { ResolvingMetadata, ResolvingViewport } from "next/types.js"
+
+type AppPageConfig<Route extends AppRoutes = AppRoutes> = {
+  default: React.ComponentType<{ params: Promise<ParamMap[Route]> } & any> | ((props: { params: Promise<ParamMap[Route]> } & any) => React.ReactNode | Promise<React.ReactNode> | never | void | Promise<void>)
+  generateStaticParams?: (props: { params: ParamMap[Route] }) => Promise<any[]> | any[]
+  generateMetadata?: (
+    props: { params: Promise<ParamMap[Route]> } & any,
+    parent: ResolvingMetadata
+  ) => Promise<any> | any
+  generateViewport?: (
+    props: { params: Promise<ParamMap[Route]> } & any,
+    parent: ResolvingViewport
+  ) => Promise<any> | any
+  metadata?: any
+  viewport?: any
+}
+
+type LayoutConfig<Route extends LayoutRoutes = LayoutRoutes> = {
+  default: React.ComponentType<LayoutProps<Route>> | ((props: LayoutProps<Route>) => React.ReactNode | Promise<React.ReactNode> | never | void | Promise<void>)
+  generateStaticParams?: (props: { params: ParamMap[Route] }) => Promise<any[]> | any[]
+  generateMetadata?: (
+    props: { params: Promise<ParamMap[Route]> } & any,
+    parent: ResolvingMetadata
+  ) => Promise<any> | any
+  generateViewport?: (
+    props: { params: Promise<ParamMap[Route]> } & any,
+    parent: ResolvingViewport
+  ) => Promise<any> | any
+  metadata?: any
+  viewport?: any
+}
+
+
+// Validate ../../../app/cart/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/cart">> = Specific
+  const handler = {} as typeof import("../../../app/cart/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/coffee/[category]/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/coffee/[category]">> = Specific
+  const handler = {} as typeof import("../../../app/coffee/[category]/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/coffee/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/coffee">> = Specific
+  const handler = {} as typeof import("../../../app/coffee/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/home/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/home">> = Specific
+  const handler = {} as typeof import("../../../app/home/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/">> = Specific
+  const handler = {} as typeof import("../../../app/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../app/store/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/store">> = Specific
+  const handler = {} as typeof import("../../../app/store/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+
+
+
+
+
+
+// Validate ../../../app/layout.tsx
+{
+  type __IsExpected<Specific extends LayoutConfig<"/">> = Specific
+  const handler = {} as typeof import("../../../app/layout.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Ads.tsx =====
+
+import Button from "./Button"
+
+export default function Ads(){
+    return <div className="flex bg-[#d2caabcc] gap-5">
+        <div className="mt-25 ml-20">
+            <h1 className="text-black text-[56px] font-bold font-sans">YOUR PERFECT CUP <br></br>AWAITS</h1>
+            <p className="text-black text-[20px] font-serif">There's always room for coffee, its not just coffee, it's an 
+                <br></br>experience, life is better with coffee
+            </p>
+            <Button onClick={() => console.log("hello")} className="bg-yellow-950 font-serif px-8 py-2 mt-10" label="Order Now"/>
+        </div>
+        <div>
+            <img src="/images/collage.png" alt="collage" className="w-100 h-130 ml-25"></img>
+        </div>
+    </div>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Billing.tsx =====
+
+"use client";
+import { useEffect, useState, useMemo } from "react";
+import Button from "./Button";
+
+export default function Billing(){
+    const [products, setProducts] = useState<any[]>([]);
+    const [payment, setPayment] = useState<number>(0);
+    const [method, setMethod] = useState<string>("");
+    const [isActive, setActive] = useState<string>("");
+    
+    const fetchData = async () => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills`, {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        const data = await response.json();
+
+        if(!data.success) return alert("ERROR IN THE CARTS USEEFFECT");
+
+        setProducts(data.data);
+        console.log(data.data);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    let subtotal = useMemo(() => {
+        console.log(products);
+        return products.reduce(
+            (sum, product) => sum + product.quantity * product.price, 0
+        );
+    }, [products]);
+
+    const updateQuantity = async (name: string, method: string) => {
+        setProducts(prev =>
+            prev.map(p =>
+                p.name === name
+                    ? {
+                        ...p,
+                        quantity: method === "add"
+                            ? p.quantity + 1
+                            : Math.max(0, p.quantity - 1)
+                    }
+                    : p
+            )
+        );
+
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-bills/${method}/${name}`, {
+            method: "PUT",
+            credentials: "include"
+        });
+    };
+
+    const printBills = async (payment: number, method: string) => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/create-payment`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                payment: payment,
+                total_amount: (subtotal - subtotal * 0.10).toFixed(2),
+                payment_method: method
+            })
+        });
+
+        console.log((subtotal - subtotal * 0.10).toFixed(2));
+        const data = await response.json();
+
+        if(!data.success) return alert("Error in getting print bills");
+
+        window.location.href = data.invoice_url;
+    }
+
+    return <div className="w-full max-w-[380px] bg-[rgba(228,228,228,0.8)] p-6 rounded-2xl">
+        <h1 className="text-black text-xl mb-4 font-bold">Bills</h1>
+            {products.map((product) => {
+                return  <div className="flex gap-2" key={product.name}>
+                            <div className="w-full max-w-[50px] h-12 bg-[rgba(125,171,114,0.8)] mb-5 rounded-xl flex items-center justify-center">
+                                <img src={product.image} alt={product.name} className="flex flex-col w-full max-w-[40px] h-auto"></img>
+                            </div>
+                            <div className="flex flex-col">
+                                <h1 className="text-black text-[14px] font-bold">{product.name}</h1>
+                                <div className="flex gap-8 text-sm">
+                                    <p className="flex flex-col text-black font-bold">x{product.quantity}</p>
+                                    <p className="flex flex-col text-black font-bold w-full max-w-[10px] rounded-full cursor-pointer" 
+                                    onClick={() => {
+                                        updateQuantity(product.name, "minus");
+                                    }}>-</p>
+                                    <p className="flex flex-col text-black font-bold w-full max-w-[30px] rounded-full cursor-pointer mr-20" 
+                                    onClick={() => {
+                                         updateQuantity(product.name, "add");
+                                    }}>+</p>
+                                    <p className="flex flex-col text-[rgba(153,153,153,0.79)] font-bold">â‚±{(product.price * product.quantity).toFixed(2)}</p>
+                                </div>
+                            </div>
+                        </div>
+            })}
+            <div className="flex justify-between">
+                <h1 className="flex flex-col text-[13px] text-black font-bold mt-3">Subtotal</h1>
+                <p className="flex flex-col text-[13px] text-black font-bold mt-3">â‚±{subtotal}</p>
+            </div>
+            <div className="flex justify-between">
+                <h1 className="flex flex-col text-[13px] text-[rgba(153,153,153,0.79)] font-bold mt-3">Tax (10%)</h1>
+                <p className="flex flex-col text-[13px] text-[rgba(153,153,153,0.79)] mt-3">â‚±{(subtotal * 0.10).toFixed(2)}</p>
+            </div>
+            <div className="flex justify-between mt-4">
+                <h1 className="flex flex-col text-[15px] text-black font-bold mt-3">Total</h1>
+                <p className="flex flex-col text-[15px] text-black font-bold mt-3">â‚±{(subtotal - subtotal * 0.10).toFixed(2)}</p>
+            </div>
+            <div className="flex justify-between mt-10">
+                <h1 className="text-[16px] text-black font-bold mt-3">Payment Method</h1>
+            </div>
+            <div className="flex justify-between mt-4">
+                <div className={`flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
+                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer ${isActive === "cash" ? "bg-[rgba(86,132,75,0.8)] text-white" : ""}`} onClick={() => {
+                    setActive("cash");
+                    setPayment(1)
+                    setMethod('CASH')
+                }}>CASH</div>
+                <div className={`flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
+                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer ${isActive === "gcash" ? "bg-[rgba(86,132,75,0.8)] text-white" : ""}`} onClick={() => {
+                    setActive("gcash");
+                    setPayment(2)
+                    setMethod('GCASH')
+                }}>G-CASH</div>
+                <div className={`flex flex-col hover:border border-[rgba(86,132,75,0.8)] w-19 h-16 items-center justify-center 
+                rounded-2xl text-[rgba(86,132,75,0.8)] cursor-pointer ${isActive === "maya" ? "bg-[rgba(86,132,75,0.8)] text-white" : ""}`} onClick={() => {
+                    setActive("maya");
+                    setPayment(3)
+                    setMethod('MAYA')
+                }}>MAYA</div>
+            </div>
+            <div className="flex items-center justify-center">
+                <Button onClick={() => printBills(payment, method)} className="w-full p-3 mt-5
+                rounded-2xl text-sm font-bold bg-[rgba(86,132,75,0.8)] cursor-pointer" label="Print Bills"/>
+            </div>
+    </div>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Button.tsx =====
+
+type MyComponent = {
+    onClick: () => void;
+    className: string;
+    label: string;
+}
+
+export default function Button(props: MyComponent){
+    return  <>
+            <button onClick={props.onClick} type="submit" className={props.className} >{props.label}
+            </button>
+            </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Carousel.tsx =====
+
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+
+type MyProducts = {
+    image: string;
+    name: string;
+    volume: number;
+    price: number;
+    rating: number;
+}
+
+const product1: MyProducts = {
+    image: "/images/coffee-latte.png",
+    name: "Coffee Latte",
+    volume: 160,
+    price: 23.49,
+    rating: 6.0
+}
+
+const product2: MyProducts = {
+    image: "/images/cappucino.png",
+    name: "Coffee Latte",
+    volume: 160,
+    price: 23.49,
+    rating: 5.0
+}
+
+const product3: MyProducts = {
+    image: "/images/cortado.png",
+    name: "Coffee Latte",
+    volume: 160,
+    price: 23.49,
+    rating: 4.0
+}
+
+const product4: MyProducts = {
+    image: "/images/doppio.png",
+    name: "Coffee Latte",
+    volume: 160,
+    price: 23.49,
+    rating: 3.0
+}
+
+const product5: MyProducts = {
+    image: "/images/doppio.png",
+    name: "Coffee Latte",
+    volume: 160,
+    price: 23.49,
+    rating: 2.0
+}
+
+
+let products: Array<MyProducts> = [product1, product2, product3, product4, product5];
+
+export default function Carousel(){
+
+    const [positionIndexes, setPositionIndexes] = useState([0, 1, 2, 3, 4, 5]);
+
+
+    const handleNext = () => {
+        setPositionIndexes((prevIndexes) => {
+        const updatedIndexes = prevIndexes.map(
+            (prevIndex) => (prevIndex + 1) % 5
+        );
+        return updatedIndexes;
+        });
+    };
+
+    const handleBack = () => {
+        setPositionIndexes((prevIndexes) => {
+        const updatedIndexes = prevIndexes.map(
+            (prevIndex) => (prevIndex + 4) % 5
+        );
+
+        return updatedIndexes;
+        });
+    };
+
+    const positions = ["center", "left1", "left", "right", "right1"];
+
+    const imageVariants = {
+        center: { x: "0%", scale: 1, zIndex: 5 },
+        left1: { x: "-92%", scale: 0.8, zIndex: 3 },
+        left: { x: "-170%", scale: 0.7, zIndex: 2 },
+        right: { x: "170%", scale: 0.7, zIndex: 1 },
+        right1: { x: "92%", scale: 0.8, zIndex: 3 },
+    };
+
+    return <>
+        <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+        >
+            <section className="mt-20 ml-16"> 
+                <h1 className="text-[#3a2f2a] font-bold text-7xl">OUR COFFEE</h1> 
+                <div className="ml-3 mt-5 flex"> 
+                    <p className="text-[#8c8a8bcc] text-[20px] font-serif">There's always room for coffee, its not 
+                        just coffee, <br></br>it's an experience, life is better with coffee </p> 
+                    <div className="bg-yellow-950 ml-150 border rounded-full w-15 
+                        h-15r justify-items-center content-center" onClick={handleNext}> 
+                    <img src="images/right-arrow.png" alt="right-arrow" 
+                        className="w-6 h-8 rotate-180"></img> 
+                    </div> 
+                <div className="bg-yellow-950 ml-5 border rounded-full w-15 h-15 justify-items-center 
+                    content-center" onClick={handleBack}> 
+                <img src="images/right-arrow.png" alt="right-arrow" className="w-6 h-8"></img> 
+                </div> 
+                </div> 
+            </section>
+            <section className="relative w-full h-[500px] flex items-center justify-center">
+            {products.map((product, i) => (
+                <motion.div
+                key={i}
+                className="absolute"
+                animate={positions[positionIndexes[i]]}
+                variants={imageVariants}
+                transition={{ duration: 0.5 }}
+                >
+                <div className="bg-[#1c1808cc] w-80 h-96 relative mt-50">
+                    <img src={product.image} className="w-55 h-55 absolute -top-25 left-1/2 -translate-x-1/2" />
+                    <h1 className="mt-40 ml-5 text-[31px] font-bold absolute">{product.name}</h1>
+                    <h1 className="text-[15px] font-bold ml-6 bg-[#5f5c5ecc] absolute mt-55 w-17 p-1 text-center">â˜… {product.rating}</h1>
+                    <p className="ml-6 mt-65 text-[18px] absolute"><span className="text-[#5f5c5ecc]">Volume</span> {product.volume} ml</p> 
+                    <div className="border-2 border-[#5f5c5ecc] ml-5 mr-5 mt-75 text-3xl p-2 absolute w-70"> 
+                        <h1 className="ml-3">{product.price}</h1> 
+                        <div className="absolute top-0 right-0 w-1/6 h-full bg-[#d5e2cdcc] text-center items-center font-thin">
+                            <p className="mt-2 text-black text-4xl">+</p>
+                        </div> 
+                    </div>
+                </div>
+                </motion.div>
+            ))}
+            </section>
+        </motion.div>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Carts.tsx =====
+
+"use-client";
+import { useState, useEffect } from "react";
+
+const outer_card: string = "w-90 h-115 text-black border border-[rgba(153,153,153,0.79)] rounded-xl flex flex-col p-4";
+const middle_card: string = "w-80 h-80 bg-[rgba(86,132,75,0.8)] rounded-xl relative overflow-hidden self-center";
+const inner_circle: string = `w-110 h-110 bg-[rgba(125,171,114,0.8)] rounded-full flex items-center justify-center
+absolute top-3/6 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-40`;
+const image_style: string = "object-cover rounded-lg w-55 h-50 self-center mb-95";
+const title_style: string = "text-xl text-black font-bold mr-32 absolute break-words";
+const price_style: string = "text-3xl text-[rgba(125,171,114,0.8)] font-bold translate-x-50 absolute";
+
+export default function Carts(){
+    const [products, setProducts] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/all-user-cart`, {
+                method: 'GET',
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            if(!data.success) return alert("ERROR IN THE CARTS USEEFFECT");
+
+            setProducts(data.data);
+            console.log(data.data)
+        }
+
+        fetchData();
+    }, [])
+
+    if(products.length === 0) return <h1 className='flex flex-col w-full max-w-[920px] text-[rgba(153,153,153,0.79)]
+        text-sm text-center'>No available carts, please click order now and <br></br>
+                            click add to cart</h1>
+
+    return <div className="flex flex-col w-full max-w-[920px]">
+        <div className="flex flex-wrap gap-15 justify-center">
+                    {products.map((product, index) => {
+                        return <>
+                        <div className={outer_card} key={index}>
+                            <div className={middle_card}>
+                                <div className={inner_circle}>
+                                    <img src={product.image}alt={product} className={image_style} ></img>
+                                </div>
+                            </div>
+                            <div className="flex justify-between gap-32 p-3 relative">
+                                <h1 className={title_style}>{product.name}</h1>
+                                <h1 className={price_style}>â‚±{product.price}</h1>
+                            </div>  
+                        </div>
+                        </>
+                    })}
+                </div>
+            </div>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Copyright.tsx =====
+
+export default function Copyright(){
+    return <div className="py-5 text-sm justify-center font-bold border-t border-white bg-[#1a1502cc] text-center items-center ">
+        <p>&copy; 2025 YESPARK ALL RIGHTS RESERVED</p>
+    </div>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Entry.tsx =====
+
+export default function Entry(){
+    return <>
+        <img 
+                    src="/images/left-image.jpg"
+                    alt="coffee"
+                    className="absolute left-25 top-5/8 -translate-y-1/2 h-80 object-cover w-60"
+                />
+        
+                <img 
+                    src="/images/right-image-coffee-latte.jpg"
+                    alt="coffee"
+                    className="absolute left-265 top-5/12 -translate-y-1/2 h-70 object-cover w-65"
+                />
+        
+                    <div className="relative z-10 flex flex-col leading-none justify-center items-center">
+                        <h1 className="text-[160px] font-semibold font-mono tracking-tight m-0 text-[#3a2f2a]">
+                            EXPRESSO
+                        </h1>
+                        <h1 className="text-[120px] font-semibold font-mono tracking-tight mt-0 mb-5 text-[#3a2f2a]">
+                            YOURSELF
+                        </h1>
+                        <p className="text-[#8c8a8bcc] text-[20px]  font-serif">Pure Coffee, pure community, pure experience, because you</p> 
+                        <p className="text-[#8c8a8bcc] text-[20px] font-serif">can never have to much coffee in your life</p>
+                    </div>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Error.tsx =====
+
+type MyComponents = {
+    label: string
+}
+export default function Error(props: MyComponents){
+    return <div className="w-fit flex border-2 border-[rgba(233,72,72,0.8)] p-2 items-center bg-white">
+        <img src="/images/error.svg" alt="error" className="mx-2 w-full max-w-[40px]"></img>
+        <p className="mx-3 text-xl text-[rgba(233,72,72,0.8)]">{props.label}</p>
+    </div>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\FirstStory.tsx =====
+
+import Button from "./Button";
+export default function FirstStory(){
+    return <>
+        <img src="/images/coffee-collage-store.jpg" alt="collage" className="flex flex-col object-cover
+        w-full max-w-[50%] h-auto"></img>
+        <div className="flex flex-col text-[15px] items-center justify-center p-30">
+            <hr className="my-4 border border-yellow-950 bg-yellow-950 w-full max-w-[80px] h-[7px] self-start" />
+            <h1 className="text-black mb-5 text-center">THE PHILIPPINES LARGEST HOMEGROWN COFFEE CHAIN</h1>
+            <p className="text-justify text-[17px] text-black font-bold">
+                Embrace your entrepreneurial spirit with us as we extend franchising 
+                opportunities across strategic locations in the Philippines. North Luzon, 
+                Central Luzon, and South Luzon are prime untapped areas, as well as Central 
+                Visayas, notably in bustling Cebu City. Our journey in Mindanao continues, 
+                in our mission to bring Philippine Coffee nationwide. We are continuously 
+                evaluating and exploring new territories for expansion, and we invite both 
+                seasoned and budding entrepreneurs to share our vision, establishing footprints 
+                in emerging markets and opening in unserved locations. Share Bo's Coffeeâ€™s 
+                mission of championing Philippine Coffee one cup at a time, and be part of the 
+                Philippinesâ€™ largest homegrown coffee chain.
+            </p>
+            <Button onClick={() => console.log("inquire")} className="border border-black p-4 mt-10 text-[12px] w-full
+                        max-w-[160px] tracking-widest bg-yellow-950 text-white hover:scale-110 hover:text-black transition duration-200" label="INQUIRE NOW" />
+        </div>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Footer.tsx =====
+
+const pStyle = "mb-2 font-serif text-[#8c8a8bcc]";
+export default function Footer(){
+    return <div className="flex gap-25 bg-[#1a1502cc] p-10 justify-center mt-5">
+        <div>
+            <h1 className="text-2xl font-bold mb-5">CAFE AROMA</h1>
+            <p className={pStyle}>Cafe Aroma Cafe</p>
+            <p className={pStyle}>123 Java Street</p>
+            <p className={pStyle}>Mochtown, Roastville 98765</p>
+            <p className={pStyle}>Expresso County, Caffeine State, USA</p>
+        </div>
+        <div>
+            <h1 className="text-2xl font-bold mb-5">OPENING HOURS</h1>
+            <p className={pStyle}>Monday to Friday</p>
+            <p className={pStyle}>08:00 AM - 09:00 PM</p>
+        </div>
+        <div>
+            <h1 className="text-2xl font-bold mb-5">COFFEE</h1>
+            <p className={pStyle}>Home</p>
+            <p className={pStyle}>About US</p>
+            <p className={pStyle}>Menu</p>
+            <p className={pStyle}>Events</p>
+            <p className={pStyle}>Contact Us</p>
+        </div>
+        <div>
+            <h1 className="text-2xl font-bold mb-5">ABOUT US</h1>
+            <p className={pStyle}>Our Story</p>
+            <p className={pStyle}>Values</p>
+            <p className={pStyle}>Team</p>
+            <p className={pStyle}>Suppliers</p>
+            <p className={pStyle}>Community</p>
+        </div>
+        <div>
+            <h1 className="text-2xl font-bold mb-5">HOME</h1>
+            <p className={pStyle}>Coffee</p>
+            <p className={pStyle}>List Menu</p>
+            <p className={pStyle}>Order</p>
+            <p className={pStyle}>Blogs</p>
+        </div>
+    </div>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Galao.tsx =====
+
+import React from "react";
+
+export default function Galao(){
+    return <>
+        <div className="text-white flex mt-25 text-5xl font-bold gap-6 h-25 bg-yellow-950 items-center">
+        {["MOCHA", "GALAO", "CAPPUCINO", "DOPPIO"].map((word, i)=> {
+            return (
+            <React.Fragment key={i}>
+                <img src="/images/galao-icon.png" alt="icon" className="w-20 h-15"></img>
+                <h1>{word}</h1>
+            </React.Fragment>
+        )
+        })}
+        </div>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Header.tsx =====
+
+"use client";
+
+import Button from "./Button";
+import { useRouter } from "next/navigation";
+
+const h1_style: string = `text-black font-serif font-bold h-7 mt-10 ml-7 cursor-pointer border-b-2 border-transparent
+            hover:border-yellow-950 transition-color duration-500`;
+
+export default function Header(){
+    const router = useRouter();
+
+    const isClick = (name: string) => {
+        switch(name){
+            case "home":
+                router.push(`/${name}`);
+                break;
+            case "coffee":
+                router.push(`/${name}/coffees`);
+                break;
+            case "all-products":
+                router.push(`/coffee//${name}`);
+                break;
+            case "cart":
+                router.push(`/${name}`);
+                break;
+            case "store":
+                router.push(`/${name}`);
+                break;
+            default:
+                router.push("/home");
+        }
+    }
+
+    return <>
+        <div className="flex mx-10 space-x-5">
+            <h1 className="mr-70 text-black font-bold text-2xl font-sans my-10 mx-10 cursor-pointer" onClick={() =>isClick("home")}>YES PARK CAFE</h1>
+            <h1 className={h1_style} onClick={() => isClick("coffee")}>Coffee</h1>
+            <h1 className={h1_style} onClick={() => isClick("cart")}>Cart</h1>
+            <h1 className={h1_style} onClick={() => isClick("store")}>Store</h1>
+            <Button onClick={() => isClick("all-products")} className="ml-70 bg-yellow-950 font-serif
+             px-6 py-2 w-33 h-12 mt-7 hover:scale-110 cursor-pointer transition duration-200" label="Order Now"/>
+             
+        </div>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Inquire.tsx =====
+
+"use client";
+
+export default function Inquire(){
+    return <>
+        <h1 className="p-10 text-4xl font-bold">LET'S GROW TOGETHER</h1>
+        <p className="p-1 text-3xl">franchise@coffeeshop.com</p>
+        <p className="p-1 text-3xl">+63 000 000 0000</p>
+        <p className="p-1 text-3xl">(02) 8650 9894 loc. 308</p>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Menu.tsx =====
+
+"use client";
+
+import { useRouter } from "next/navigation";
+import Products from "./Products";
+import { useParams } from "next/navigation";
+
+const square_style: string = `w-20 h-23 rounded-sm 
+                    text-black flex flex-col items-center justify-center hover:border border-[#8c8a8bcc] cursor-pointer`;
+const h1_style: string = "mb-4 text-sm mt-2";
+const pic_style: string = "w-10 h-10 mt-3 object-contain";
+
+export default function Menu(){
+    
+    const params = useParams();
+    const coffeeIds: string = String(params.category || "all-products");
+    const router = useRouter();
+    
+    return <>
+        <div className="flex gap-10 justify-center relative">
+            <div className={square_style} onClick={() => router.push('/coffee/all-products')}>
+                <img src="/images/coffee-icon.png" alt="all-products" className={pic_style}></img>
+                <h1 className={h1_style}>All</h1>
+            </div>
+            <div className={square_style} onClick={() => router.push('/coffee/coffees')}> 
+                <img src="/images/coffee-icon.png" alt="coffee" className={pic_style}></img>
+                <h1 className={h1_style}>Coffee</h1>
+            </div>
+            <div className={square_style} onClick={() => router.push('/coffee/snacks')}>
+                <img src="/images/snacks-icon.png" alt="snacks" className={pic_style}></img>
+                <h1 className={h1_style}>Snacks</h1>
+            </div>
+            <div className={square_style} onClick={() => router.push('/coffee/breakfast')}>
+                <img src="/images/breakfast-icon.png" alt="breakfast" className={pic_style}></img>
+                <h1 className={h1_style}>Breakfast</h1>
+            </div>
+            <div className={square_style} onClick={() => router.push('/coffee/bread')}>
+                <img src="/images/bread-icon.png" alt="bread" className={pic_style}></img>
+                <h1 className={h1_style}>Bread</h1>
+            </div>
+            <div className={square_style} onClick={() => router.push('/coffee/pastries')}>
+                <img src="/images/pastries-icon.png" alt="pastries" className={pic_style}></img>
+                <h1 className={h1_style}>Pastries</h1>
+            </div>
+        </div>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Our.tsx =====
+
+export default function Our(){
+    return <>
+            <h1 className="text-[#3a2f2a] font-bold text-7xl text-center">
+                OUR ROASTING
+            </h1>
+
+            <p className="text-[#8c8a8bcc] text-xl font-serif text-center mt-4">
+                A cup of coffee on a warm summer day reminds you there's
+            </p>
+            <p className="text-[#8c8a8bcc] text-xl font-serif text-center mt-2">
+                a bright side to every day. There's a great big coffee world
+            </p>
+            <p className="text-[#8c8a8bcc] text-xl font-serif text-center mt-2">
+                waiting for you. And it tastes great!
+            </p>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Products.tsx =====
+
+"use client";
+
+import { useState, useEffect } from "react";
+import Button from "./Button";
+import Error from "./Error";
+
+type MyComponents = {
+    coffeeId: string;
+}
+
+const outer_card: string = "w-90 h-115 text-black border border-[rgba(153,153,153,0.79)] rounded-xl flex flex-col p-4";
+const middle_card: string = "w-80 h-80 bg-[rgba(86,132,75,0.8)] rounded-xl relative overflow-hidden self-center";
+const inner_circle: string = `w-110 h-110 bg-[rgba(125,171,114,0.8)] rounded-full flex items-center justify-center
+absolute top-3/6 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-40`;
+const image_style: string = "object-cover rounded-lg w-55 h-55 self-center mb-95";
+const title_style: string = "text-xl text-black font-bold mr-32 absolute break-words";
+const price_style: string = "text-3xl text-[rgba(125,171,114,0.8)] font-bold translate-x-50 absolute";
+const circle_style: string = "transition-colors duration-500 ease-in-out hover:bg-[rgba(125,171,114,0.8)] rounded-full w-15 h-15 flex justify-center items-center cursor-pointer";
+const oz_style: string = "text-[10px] text-[rgba(153,153,153,0.79)] font-bold"
+
+export default function Products(props: MyComponents){
+    
+    const [products, setProducts] = useState<any[]>([]);
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+    const [totalCart, setTotalCart] = useState<number>(0);
+    const [cartShow, setCartShow] = useState<boolean>(false);
+    const [size, setSize] = useState<number | null>(null);
+    const [error, setError] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>("");
+    const [visible, setVisible] = useState<boolean>(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/coffee/product/${props.coffeeId}`,
+                    { method: "GET", credentials: "include"}
+                );
+                const data = await response.json();
+
+                if (!data.success) {
+                    setMessage(data.message);
+                    setError(true);
+                    return;
+                }
+                setProducts(data.data);
+                console.log("raw response length:", data.data.length);
+            } catch (err) {
+                if (err !== "AbortError") console.error(err);
+            }
+            };
+                fetchData();
+        }, []);
+
+    useEffect(() => {
+        if(error) {
+            window.scrollTo(0, 0);
+            setVisible(true);
+        }
+        const time = setTimeout(() => {
+            setVisible(false);
+            
+            setTimeout(() => {
+                setError(false);    
+            }, 300)
+        }, 1000)
+
+        setCartShow(false);
+
+        return () => clearTimeout(time); 
+    }, [error])
+
+    const add_cart = async (orderProduct: string, orderSize: number | null, orderQuantity: number) => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/add-cart`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    product_name: orderProduct,
+                    size: orderSize,
+                    quantity: orderQuantity
+                }),
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            console.log(data);
+
+            if(!data.success){
+                setMessage(data.message);
+                setError(true);
+            } 
+               
+
+            setTotalCart(data.data);
+        }
+
+    const sizeClick = (index: number, height: number, name: string, orderCategory: string) => {
+        return <div className={`mt-${height} ml-7 flex`}>
+                        <div className="transition-colors duration-500 ease-in-out bg-[rgba(86,132,75,0.8)] 
+                        rounded-full w-9 h-9 flex justify-center items-center text-3xl text-white mt-2 cursor-pointer"
+                        onClick={() => 
+                                setQuantities(prev => ({
+                                    ...prev,
+                                    [index]: (prev[index] || 0) > 0 ? prev[index] - 1 : 0
+                                }))}>
+                            <p>-</p>
+                        </div>
+                        <h1 className="text-2xl self-center mx-3">
+                            {quantities[index] || 0}
+                        </h1>
+                        <div className="transition-colors duration-500 ease-in-out bg-[rgba(86,132,75,0.8)] 
+                        rounded-full w-9 h-9 flex justify-center items-center text-2xl text-white mt-2 cursor-pointer"
+                        onClick={() =>
+                                setQuantities(prev => ({
+                                    ...prev,
+                                    [index]: (prev[index] || 0) + 1
+                                }))}>
+                            <p>+</p>
+                        </div>
+                        <Button onClick={() => { 
+                            const quantity = quantities[index] | 0;
+                            const product_size = orderCategory === 'coffees' ? size : null;
+                            add_cart(name, product_size, quantity);
+                            setCartShow(true); 
+                            }} className="bg-[rgba(86,132,75,0.8)] font-sans ml-5 w-38 p-3 h-13 rounded-4xl font-bold text-white
+                            cursor-pointer" label="Add to Order"/>
+                    </div>
+    }
+    return <>
+        <div className="p-2 flex flex-wrap gap-10 justify-center">
+            {error && (
+                <div className={`absolute top-5 z-50 transition-opacity duration-500 ease-in-out
+                ${visible ? "opacity-100" : "opacity-0" }`}>
+                    <Error label={message}/>
+                </div>
+            )}
+            {products.map((product, index) => {
+                console.log(product.name);
+                return <div className={outer_card} key={product.id ?? index}>
+                    <div className={middle_card}>
+                        <div className={inner_circle}>
+                            <img src={product.image}alt={product} className={image_style} ></img>
+                        </div>
+                    </div>
+                    <div className="flex justify-between gap-32 p-3 relative">
+                        <h1 className={title_style}>{product.name}</h1>
+                        <h1 className={price_style}>â‚±{product.price}</h1>
+                        {product.category === "coffees" && (
+                            <div className="top-20 left-0 w-full flex justify-center gap-4 mt-15">
+                                <div className="flex flex-col items-center gap-2">
+                                    <div className={circle_style} onClick={() => {
+                                        setActiveIndex(activeIndex === index ? null : index);
+                                            setQuantities(prev => ({
+                                                ...prev,
+                                                [index]: 0
+                                            }));
+                                        setSize(12);
+                                    }}>
+                                        <img src="/images/grande-icon.png" alt="tall" className="w-5 h-5" />
+                                    </div>
+                                    <h1 className="text-sm">Tall</h1>
+                                    <p className={oz_style}>12 oz</p>
+                                </div>
+
+                                <div className="flex flex-col items-center gap-2">
+                                    <div className={circle_style} onClick={() => {
+                                        setActiveIndex(activeIndex === index ? null : index);
+                                         setActiveIndex(activeIndex === index ? null : index);
+                                            setQuantities(prev => ({
+                                                ...prev,
+                                                [index]: 0
+                                            }));                        
+                                        setSize(16);               
+                                    }}>
+                                        <img src="/images/grande-icon.png" alt="grande" className="w-6 h-6" />
+                                    </div>
+                                    <h1 className="text-sm">Grande</h1>
+                                    <p className={oz_style}>16 oz</p>
+                                </div>
+
+                                <div className="flex flex-col items-center gap-2">
+                                    <div className={circle_style} onClick={() => {
+                                        setActiveIndex(activeIndex === index ? null : index);
+                                            setQuantities(prev => ({
+                                                ...prev,
+                                                [index]: 0
+                                            }));
+                                        setSize(24);
+                                        setActiveIndex(activeIndex === index ? null : index)
+                                    }}>
+                                        <img src="/images/grande-icon.png" alt="venti" className="w-7 h-7" />
+                                    </div>
+                                    <h1 className="text-sm">Venti</h1>
+                                    <p className={oz_style}>24 oz</p>
+                                </div>
+
+                                <div className="flex flex-col items-center gap-2">
+                                    <div className={circle_style} onClick={() => {
+                                        setActiveIndex(activeIndex === index ? null : index);
+                                            setQuantities(prev => ({
+                                                ...prev,
+                                                [index]: 0
+                                            }));
+                                        setSize(32);
+                                        setActiveIndex(activeIndex === index ? null : index)
+                                    }}>
+                                        <img src="/images/grande-icon.png" alt="trenta" className="w-8 h-8" />
+                                    </div>
+                                    <h1 className="text-sm">Trenta</h1>
+                                    <p className={oz_style}>32 oz</p>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                    {product.category === "coffees" && activeIndex === index && sizeClick(index, 0, product.name, product.category)}
+                    {product.category !== "coffees" && sizeClick(index, 15, product.name, product.category)}    
+                </div>
+            })}
+        </div>
+        {cartShow &&
+        <div className="absolute rounded-full bg-[rgba(86,132,75,0.8)] top-9 right-161 flex items-center w-4 h-4 justify-center text-center text-[9px] font-bold">
+            <h1>{totalCart}</h1>
+        </div>}
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Roast.tsx =====
+
+export default function Roast(){
+    return <>
+        <section className="flex flex-row gap-5">
+            <div>
+                <img src="/images/left-f-image.jpg" alt="left-f-image" className="w-100 h-60 mb-40 mt-70"></img>
+                <img src="/images/left-s-image.jpg" alt="left-f-image" className="w-100 h-60"></img>
+            </div>
+            <div className="text-yellow-950 text-5xl mt-40 font-sans font-bold items-center justify-center
+            content-center text-center">
+                <h1 className="mb-40">LIGHT ROAST</h1>
+                <h1 className="mb-40">MEDIUM ROAST</h1>
+                <h1 className="mb-40">DARK ROAST</h1>
+                <h1>MEDIUM-DARK 
+                    <br></br>ROAST</h1>
+            </div>
+            <div>
+                <img src="/images/right-f-image.jfif" alt="left-f-image" className="w-100 h-60 mb-40 mt-20"></img>
+                <img src="/images/right-s-image.jfif" alt="left-f-image" className="w-100 h-60 "></img>
+            </div>
+        </section>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\Search.tsx =====
+
+import Button from "./Button"
+
+type MyComponent = {
+    className: string;
+    placeholder: string;
+}
+
+export default function Search(props: MyComponent){
+    return <>
+    <div className="relative">
+        <input id="search" className={props.className} placeholder={props.placeholder}></input>
+        <Button onClick={() => console.log("hello")} className="bg-yellow-950 font-serif
+             px-10 py-3 absolute right-2 top-4/6 -translate-y-1/2 cursor-pointer hover:text-black
+             transition-color duration-200" label="Search"/>
+    </div>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\(component)\SecondStory.tsx =====
+
+import Button from "./Button"
+
+export default function SecondStory(){
+    return <>
+            <div className="flex flex-col text-[15px] items-center justify-center p-30">
+                <hr className="my-4 border border-yellow-950 bg-yellow-950 w-full max-w-[80px] h-[7px] self-start" />
+                <h1 className="text-black mb-5 text-center">BRINGING PHILIPPINE COFFEE TO MORE FILIPINOS WORLDWIDE</h1>
+                <p className="text-justify text-[17px] text-black font-bold mb-4">
+                    As one of the pioneering chains in the Philippine coffee industry, 
+                    we are not just a homegrown brand; we continuously champion Philippine 
+                    Coffee internationally by opening more locations worldwide.
+                </p>
+                <p className="text-justify text-[17px] text-black font-bold mb-4">
+                    In an ever-evolving industry, we remain steadfast in our commitment to 
+                    delighting customers and elevating the coffee experience. Our passionate 
+                    team of store partners, rooted in the love, warmth, and care that Filipinos 
+                    are known for, serve as the backbone of our brand.â€‹
+                </p>
+                <p className="text-justify text-[17px] text-black font-bold mb-4">
+                    As we set our sights on global expansion, we look to partner with dynamic entrepreneurs 
+                    to join our network of franchisees. We present a unique opportunity to be part of a globally 
+                    recognized Filipino coffee brand that combines authenticity with innovation. Our proven track 
+                    record, combined with a distinct style of hospitality, positions us as a leader in the coffee 
+                    franchising business. Embrace the journey with Bo's Coffee and become a key player in the 
+                    international coffee scene, where passion meets excellence in every cup.â€‹
+                </p>
+                <Button onClick={() => console.log("inquire")} className="border border-black p-4 mt-10 text-[12px] w-full
+                            max-w-[160px] tracking-widest bg-yellow-950 text-white hover:scale-110 hover:text-black transition duration-200" label="INQUIRE NOW" />
+            </div>
+            <img src="/images/coffee-store.jpg" alt="collage" className="flex flex-col object-cover
+                w-full max-w-[50%] h-auto"></img>
+        </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\cart\loading.tsx =====
+
+export default function Loading() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen text-gray-200 bg-black/80">
+      <div className="animate-spin h-16 w-16 border-4 border-t-transparent border-white rounded-full mb-4"></div>
+      <p className="text-lg">Loading please wait...</p>
+    </div>
+  );
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\cart\page.tsx =====
+
+"use client";
+import Carts from "../(component)/Carts";
+import Billing from "../(component)/Billing";
+
+export default function Cart(){
+   return <>
+      <div className="flex gap-1 items-start">
+         <Carts />
+         <Billing />
+      </div>
+   </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\coffee\[category]\loading.tsx =====
+
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\coffee\[category]\page.tsx =====
+
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\coffee\loading.tsx =====
+
+export default function Loading() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen text-gray-200 bg-black/80">
+      <div className="animate-spin h-16 w-16 border-4 border-t-transparent border-white rounded-full mb-4"></div>
+      <p className="text-lg">Loading please wait...</p>
+    </div>
+  );
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\coffee\page.tsx =====
+
+"use client";
+
+import Menu from "../(component)/Menu";
+
+export default function Coffee(){
+    return <>
+        <Menu />
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\home\loading.tsx =====
+
+export default function Loading() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen text-gray-200 bg-black/80">
+      <div className="animate-spin h-16 w-16 border-4 border-t-transparent border-white rounded-full mb-4"></div>
+      <p className="text-lg">Loading please wait...</p>
+    </div>
+  );
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\home\page.tsx =====
+
+"use client";
+
+import { useEffect, useState } from "react";
+import Our from "../(component)/Our";
+import Galao from "../(component)/Galao";
+import Roast from "../(component)/Roast";
+import Ads from "../(component)/Ads";
+import Carousel from "../(component)/Carousel";
+import Entry from "../(component)/Entry";
+
+type Products = {
+    name: string;
+	image: string;
+	rating: number
+	volume: number;
+	price: number
+};
+
+const images = [
+  "/images/left-f-image.jpg",
+  "/images/galao-icon.png",
+  "/images/left-f-image.jpg",
+  "/images/galao-icon.png",
+];
+
+const products: Products[] = [
+    { name: "Galao", image: "/images/galao-icon.png", rating: 4.5, volume: 160, price: 25.3 },
+    { name: "Mocha", image: "/images/galao-icon.png", rating: 4.5, volume: 160, price: 25.3 },
+    { name: "Doppio", image: "/images/galao-icon.png", rating: 4.5, volume: 160, price: 25.3 },
+    { name: "Latte", image: "/images/galao-icon.png", rating: 4.5, volume: 160, price: 25.3 },
+    { name: "Americano", image: "/images/galao-icon.png", rating: 4.5, volume: 160, price: 25.3 }
+];
+
+
+export default function Home(){
+    
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/guest`, {
+                method: "GET",
+                credentials: "include"
+            });
+
+            const data = await response.json();
+
+            if(!data.success){
+                localStorage.setItem('userId', data.userId);
+                console.log("new token!");
+            }
+
+            console.log(data.success);
+        }
+
+        fetchData();
+    }, []);
+
+    return <>
+        <section className="relative w-full h-[350px] bg-[#dbdac6cc] flex flex-col items-center justify-center px-12">
+            <Entry />
+        </section>
+        <Galao />
+        <Carousel />
+        <section className="mt-20 flex flex-col items-center">
+            <Our />
+            <Roast />
+        </section>
+        <Galao />
+        <section className="p-20">
+            <Ads />
+        </section>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\store\loading.tsx =====
+
+export default function Loading() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen text-gray-200 bg-black/80">
+      <div className="animate-spin h-16 w-16 border-4 border-t-transparent border-white rounded-full mb-4"></div>
+      <p className="text-lg">Loading please wait...</p>
+    </div>
+  );
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\store\page.tsx =====
+
+"use client";
+import { useRouter } from "next/navigation";
+import Inquire from "../(component)/Inquire";
+import Button from "../(component)/Button";
+import FirstStory from "../(component)/FirstStory";
+import SecondStory from "../(component)/SecondStory";
+
+export default function Store(){
+    const router = useRouter();
+    return <>
+        <img src="/images/coffee-shop-store.jpg" alt="store" className="w-full "></img>
+        <div className="text-black flex flex-col items-center justify-center p-10 mb-25 w-full">
+            <Inquire />
+            <Button onClick={() => console.log("inquire")} className="border border-black p-4 mt-10 text-[12px] w-full
+            max-w-[160px] tracking-widest bg-yellow-950 text-white hover:scale-110 hover:text-black transition duration-200" label="INQUIRE NOW" />
+        </div>
+        <div className="flex w-full">
+            <FirstStory />
+        </div>
+        <div className="flex w-full">
+            <SecondStory />
+        </div>
+    </>
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\layout.tsx =====
+
+import type { Metadata } from "next";
+import { Geist, Geist_Mono,  Playfair_Display, Inter } from "next/font/google";
+import Header from "./(component)/Header";
+import Footer from "./(component)/Footer";
+import "./globals.css";
+import Copyright from "./(component)/Copyright";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "YES PARK CAFE",
+  description: "Generated by create next app",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${playfair.variable} ${inter.variable} antialiased`}
+      >
+        <Header />
+        {children}
+        <Footer />
+        <Copyright />
+      </body>
+    </html>
+  );
+}
+
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\app\page.tsx =====
+
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+export default function Page() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/home");
+  }, []);
+
+  return null;
+}
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\next-env.d.ts =====
+
+/// <reference types="next" />
+/// <reference types="next/image-types/global" />
+import "./.next/dev/types/routes.d.ts";
+
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.
+
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\next.config.ts =====
+
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+
+export default nextConfig;
+
+
+===== C:\VsCode Projects\coding project\yes-park-cafe-frontend\tailwind.config.ts =====
+
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        serif: ["var(--font-playfair)"],
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
+

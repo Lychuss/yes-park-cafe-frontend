@@ -1,47 +1,40 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import Products from "./Products";
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
-const square_style: string = `w-20 h-23 rounded-sm 
-                    text-black flex flex-col items-center justify-center hover:border border-[#8c8a8bcc] cursor-pointer`;
-const h1_style: string = "mb-4 text-sm mt-2";
-const pic_style: string = "w-10 h-10 mt-3 object-contain";
+const CATEGORIES = [
+    { label: "All", slug: "all-products", icon: "/images/coffee-icon.png", alt: "all-products" },
+    { label: "Coffee", slug: "coffees", icon: "/images/coffee-icon.png", alt: "coffee" },
+    { label: "Snacks", slug: "snacks", icon: "/images/snacks-icon.png", alt: "snacks" },
+    { label: "Breakfast", slug: "breakfast", icon: "/images/breakfast-icon.png", alt: "breakfast" },
+    { label: "Bread", slug: "bread", icon: "/images/bread-icon.png", alt: "bread" },
+    { label: "Pastries", slug: "pastries", icon: "/images/pastries-icon.png", alt: "pastries" },
+];
+
+const square_style: string = `flex h-[92px] w-20 shrink-0 cursor-pointer flex-col items-center justify-center gap-2 rounded-sm border
+                    text-black hover:border-[#8c8a8bcc] focus-visible:outline focus-visible:outline-2 focus-visible:outline-yellow-950`;
+const h1_style: string = "text-sm";
+const pic_style: string = "h-10 w-10 object-contain";
 
 export default function Menu(){
-    
     const params = useParams();
-    const coffeeIds: string = String(params.category || "all-products");
     const router = useRouter();
-    
-    return <>
-        <div className="flex gap-10 justify-center relative">
-            <div className={square_style} onClick={() => router.push('/coffee/all-products')}>
-                <img src="/images/coffee-icon.png" alt="all-products" className={pic_style}></img>
-                <h1 className={h1_style}>All</h1>
-            </div>
-            <div className={square_style} onClick={() => router.push('/coffee/coffees')}> 
-                <img src="/images/coffee-icon.png" alt="coffee" className={pic_style}></img>
-                <h1 className={h1_style}>Coffee</h1>
-            </div>
-            <div className={square_style} onClick={() => router.push('/coffee/snacks')}>
-                <img src="/images/snacks-icon.png" alt="snacks" className={pic_style}></img>
-                <h1 className={h1_style}>Snacks</h1>
-            </div>
-            <div className={square_style} onClick={() => router.push('/coffee/breakfast')}>
-                <img src="/images/breakfast-icon.png" alt="breakfast" className={pic_style}></img>
-                <h1 className={h1_style}>Breakfast</h1>
-            </div>
-            <div className={square_style} onClick={() => router.push('/coffee/bread')}>
-                <img src="/images/bread-icon.png" alt="bread" className={pic_style}></img>
-                <h1 className={h1_style}>Bread</h1>
-            </div>
-            <div className={square_style} onClick={() => router.push('/coffee/pastries')}>
-                <img src="/images/pastries-icon.png" alt="pastries" className={pic_style}></img>
-                <h1 className={h1_style}>Pastries</h1>
-            </div>
-        </div>
-        <Products coffeeId={coffeeIds}></Products>
-    </>
+    const currentCategory = typeof params.category === "string" ? params.category : null;
+
+    return (
+        <nav aria-label="Menu categories" className="flex flex-wrap justify-center gap-3 px-4 py-4 sm:gap-6 lg:gap-10">
+            {CATEGORIES.map((category) => (
+                <button
+                    key={category.slug}
+                    type="button"
+                    aria-current={currentCategory === category.slug ? "page" : undefined}
+                    className={`${square_style} ${currentCategory === category.slug ? "border-[#8c8a8bcc]" : "border-transparent"}`}
+                    onClick={() => router.push(`/coffee/${category.slug}`)}
+                >
+                    <img src={category.icon} alt={category.alt} className={pic_style} />
+                    <span className={h1_style}>{category.label}</span>
+                </button>
+            ))}
+        </nav>
+    );
 }

@@ -1,9 +1,15 @@
-import Products from "@/app/(component)/Products";
-import Menu from "@/app/(component)/Menu";
+"use client";
 
-export default function Page({ params }: { params: { category: string } }) {
-  return <>
-    <Menu />
-    <Products coffeeId={params.category} />
-  </>;
+import { useParams } from "next/navigation";
+import Menu from "../../(component)/Menu";
+import Products from "../../(component)/Products";
+
+export default function CoffeeCategory(){
+    const params = useParams<{ category: string }>();
+    const category = String(params.category ?? "all-products");
+
+    return <>
+        <Menu />
+        <Products key={category} coffeeId={category} />
+    </>
 }
