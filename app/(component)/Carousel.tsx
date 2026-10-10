@@ -11,7 +11,6 @@ type MyProducts = {
     rating: number;
 };
 
-<<<<<<< HEAD
 const products: Array<MyProducts> = [
     { image: "/images/coffee-latte.png", name: "Coffee Latte", volume: 160, price: 23.49, rating: 6.0 },
     { image: "/images/cappucino.png",    name: "Coffee Latte", volume: 160, price: 23.49, rating: 5.0 },
@@ -103,84 +102,6 @@ export default function Carousel(){
                         </div>
                     </motion.div>
                 ))}
-=======
-const products: MyProducts[] = [
-    { image: "/images/coffee-latte.png", name: "Coffee Latte", volume: 160, price: 23.49, rating: 6 },
-    { image: "/images/cappucino.png", name: "Cappucino", volume: 160, price: 23.49, rating: 5 },
-    { image: "/images/cortado.png", name: "Cortado", volume: 160, price: 23.49, rating: 4 },
-    { image: "/images/doppio.png", name: "Doppio", volume: 160, price: 23.49, rating: 3 },
-    { image: "/images/doppio.png", name: "Espresso", volume: 160, price: 23.49, rating: 2 }
-];
-
-export default function Carousel() {
-
-    const [positionIndexes, setPositionIndexes] = useState([0,1,2,3,4]);
-
-    const handleNext = () => {
-        setPositionIndexes(prev =>
-            prev.map(i => (i + 1) % 5)
-        );
-    };
-
-    const handleBack = () => {
-        setPositionIndexes(prev =>
-            prev.map(i => (i + 4) % 5)
-        );
-    };
-
-    const positions = ["center","left1","left","right","right1"];
-
-    const imageVariants = {
-        center: { x: "0%", scale: 1, zIndex: 5 },
-        left1: { x: "-70%", scale: 0.85, zIndex: 3 },
-        left: { x: "-120%", scale: 0.75, zIndex: 2 },
-        right: { x: "120%", scale: 0.75, zIndex: 2 },
-        right1: { x: "70%", scale: 0.85, zIndex: 3 }
-    };
-
-    return (
-        <motion.div
-            initial={{ opacity:0, y:100 }}
-            whileInView={{ opacity:1, y:0 }}
-            transition={{ duration:0.8 }}
-            viewport={{ once:true }}
-            className="px-6 md:px-16 mt-20"
-        >
-
-            {/* HEADER */}
-            <section className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-
-                <div>
-                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-[#3a2f2a]">
-                        OUR COFFEE
-                    </h1>
-
-                    <p className="text-[#8c8a8bcc] text-sm md:text-lg font-serif mt-3 max-w-md">
-                        There's always room for coffee, it's not just coffee,
-                        it's an experience. Life is better with coffee.
-                    </p>
-                </div>
-
-                {/* ARROWS */}
-                <div className="flex gap-4">
-
-                    <button
-                        className="bg-yellow-950 w-12 h-12 rounded-full flex items-center justify-center"
-                        onClick={handleNext}
-                    >
-                        <img src="/images/right-arrow.png" className="w-5 rotate-180"/>
-                    </button>
-
-                    <button
-                        className="bg-yellow-950 w-12 h-12 rounded-full flex items-center justify-center"
-                        onClick={handleBack}
-                    >
-                        <img src="/images/right-arrow.png" className="w-5"/>
-                    </button>
-
-                </div>
-
->>>>>>> 24e3ce044366f1b52d4be3055db6ab7e5bc3f64d
             </section>
 
             {/* CAROUSEL */}
@@ -235,8 +156,4 @@ export default function Carousel() {
 
         </motion.div>
     );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 24e3ce044366f1b52d4be3055db6ab7e5bc3f64d
