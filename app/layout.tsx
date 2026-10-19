@@ -49,7 +49,11 @@ export default function RootLayout({
         className={`${playfair.variable} ${inter.variable} antialiased flex min-h-screen flex-col`}
       >
         <Header />
-        <main className="w-full flex-1">{children}</main>
+        <main className="w-full flex-1">
+
+            {children}
+
+        </main>
         <Footer />
         <Copyright />
       </body>
